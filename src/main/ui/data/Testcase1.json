@@ -1,0 +1,8 @@
+{
+    "Testcase": "1",
+    "TestcaseDescription": "Orange Hrm Demo - Login",
+    "TestSummary": "Orange Hrm Demo - Validate Login",
+    "Tags": "@e2e @regression @tc_1 @OrangeHrm",
+    "Username":"Admin",
+    "Password":"admin123"
+}

@@ -1,0 +1,70 @@
+{
+  "name": "playwrightframework",
+  "version": "1.0.0",
+  "description": "Plywright Framework",
+  "main": "index.js",
+  "scripts": {
+    "test:weblighthouse": "node ./src/test/qualitycheck/WebLighthouse.mjs",
+    "test:mobilelighthouse": "node ./src/test/qualitycheck/MobileLighthouse.mjs",
+
+    "//comment": "============================= API Testing  ===================================",
+    "test:qa:api": "cross-env NODE_ENV='qa' npx playwright test --trace on ./src/test/scriptLibrary/api || true",
+    "test:dev:api": "cross-env NODE_ENV='dev' npx playwright test --trace on ./src/test/scriptLibrary/api",
+    "test:local:api": "cross-env NODE_ENV='local' npx playwright test --trace on ./src/test/scriptLibrary/api",
+
+    "//comment1": "============================= UI Testing  ===================================",
+    "test:qa:ui": "cross-env NODE_ENV='qa' npx playwright test --trace on ./src/test/scriptLibrary/ui",
+    "test:dev:ui": "cross-env NODE_ENV='dev' npx playwright test --trace on ./src/test/scriptLibrary/ui",
+    "test:local:ui": "cross-env NODE_ENV='local' npx playwright test --trace on ./src/test/scriptLibrary/ui",
+
+    "//comment2": "============================= Cucumber ===================================",
+    "test:cucumber:qa": "cross-env NODE_ENV='qa' FORCE_COLOR=0 npx bddgen && npx playwright test",
+    "test:cucumber:dev": "cross-env NODE_ENV='dev' FORCE_COLOR=0 npx bddgen && npx playwright test",
+    "test:cucumber:local": "cross-env NODE_ENV='local' FORCE_COLOR=0 npx bddgen && npx playwright test",
+    
+    "//comment3": "============================= Allure Report Generation =================================",
+    "report:allure": "allure generate ./reports/allure-results -o ./reports/allure-report --clean && allure open ./reports/allure-report",
+    "report:playwright": "npx playwright show-report ./reports/html-report"
+  },
+  "author": "DhowlathBasha",
+  "license": "ISC",
+
+  "dependencies": {
+    "@axe-core/playwright": "^4.8.5",
+    "@cucumber/cucumber": "^10.3.2",
+    "adm-zip": "^0.5.12",
+    "allure-commandline": "^2.27.0",
+    "archiver": "^7.0.1",
+    "dotenv": "^16.4.5",
+    "exceljs": "^4.4.0",
+    "lighthouse": "^11.7.0",
+    "moment": "^2.30.1",
+    "pdfjs-dist-es5": "^2.13.216",
+    "playwright": "^1.42.1",
+    "playwright-bdd": "^6.0.3",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "v8-to-istanbul": "^9.2.0",
+    "vite-plugin-istanbul": "^6.0.0",
+    "winston": "^3.13.0"
+  },
+  
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@types/adm-zip": "^0.5.5",
+    "@types/archiver": "^6.0.2",
+    "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "allure-playwright": "^2.15.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.3"
+  }
+}
