@@ -1,5 +1,5 @@
-import { test } from '../configs/fixtures/bddPageFixture'
-import { createBdd } from 'playwright-bdd'
+import { test } from '../configs/fixtures/bddPageFixture';
+import { createBdd } from 'playwright-bdd';
 
 const { Given, When, Then, } = createBdd(test)
 

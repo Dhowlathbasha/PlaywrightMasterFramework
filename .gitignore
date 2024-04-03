@@ -1,0 +1,12 @@
+node_modules/
+test-results/
+allure-results/
+allure-report/
+html-report/
+Downloads/
+html-report.zip/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/reports
