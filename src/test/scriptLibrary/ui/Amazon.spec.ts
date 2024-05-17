@@ -1,9 +1,9 @@
-import { test, expect } from '@fixtures/pageFixture'
+import { test as amazon, expect } from '@fixtures/pageFixture'
 import excelActions from '../../../main/utils/ExcelActions'
 import { firefox } from 'playwright'
 
-test("Amazon Home page", {tag:''}, async({page,amazonHomePage,excelActions})=>{
-    await firefox.launch()
+amazon("Amazon Home page", async({page,amazonHomePage,excelActions})=>{
+    //await amazonHomePage.launch()
     await amazonHomePage.navigate()
     await amazonHomePage.selectOptionDropdown();
     await amazonHomePage.validateUrl()

@@ -17,8 +17,13 @@ export class PlaywrightActions {
         this.testInfo = testInfo;
     }
 
-    async openurl(url:string,){
-        await this.page.goto(url)
+    async openurl(url:string, options?:any){
+        await this.page.goto(url,options);
+    }
+
+    async openUrlwithEndpoint(url:string, endpoint:string,options?:any){
+        url+=endpoint;
+        await this.page.goto(url,options)
     }
 
     async closeTabById(options?: {tabId?: number}) {

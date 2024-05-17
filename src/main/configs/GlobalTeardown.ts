@@ -1,15 +1,28 @@
-import path from 'path';
-import AdmZip from 'adm-zip';
+import fs from 'fs';
+import { mergeHTMLReports } from "playwright-merge-html-reports";
 
-const reportPath = path.join('../../reports', 'html-report');
-const outputFilePath = '../../reports/html-report'
-const reportfileName : string = './report.zip'
+async function globalTeardown() {
+    let rootPath = "./reports/";
+    let pathToDirectory = rootPath + "html-report";
+    let arrayFilespath: string[] = [];
 
-async function globalTeardown(){
-    const zip = new AdmZip();
-    zip.addLocalFolder(reportPath, reportPath);
-    await zip.writeZipPromise(reportfileName);
-    console.log(`Report Zip File Created : ${outputFilePath}`);
+    mergeHTMLReports(getFiles(pathToDirectory,arrayFilespath), {
+        outputFolderName: "html-report",
+    });
 }
+
+function getFiles(dir:string , files: string[]) {
+    const fileList = fs.readdirSync(dir)
+    for (const file of fileList) {
+      const name : any = `${dir}/${file}`
+      if (fs.statSync(name).isDirectory()) {
+        getFiles(name, files)
+      } else {
+        files.push(name)
+      }
+    }
+    return files
+  }
+  
 
 export default globalTeardown;

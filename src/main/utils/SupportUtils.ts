@@ -1,24 +1,36 @@
-import { Page, TestInfo } from '@playwright/test';
-import moment from 'moment';
+import { Page, TestInfo } from "@playwright/test";
+import moment from "moment";
+import fs from "fs";
 
-export default class SupportUtils{
-
-async addDaysToCurrentDate(addDays: moment.DurationInputArg1) {
-    let date = moment().add(addDays,'d').toDate();
-    let formattedDate = moment(date).format('DD-MMM-YYYY hh:mm:ss.SSS');
+export default class SupportUtils {
+  async addDaysToCurrentDate(addDays: moment.DurationInputArg1) {
+    let date = moment().add(addDays, "d").toDate();
+    let formattedDate = moment(date).format("DD-MMM-YYYY hh:mm:ss.SSS");
     return formattedDate;
-}
+  }
 
-async addAnnotations(jsonData: { [x: string]: any; }) {
-    this.testInfo.annotations.push({ type: 'test_id', description: jsonData["Testcase"] });
-    this.testInfo.annotations.push({ type: 'test_key', description: jsonData["TestKey"] });
-    this.testInfo.annotations.push({ type: 'test_summary', description: jsonData["TestSummary"] });
-    this.testInfo.annotations.push({ type: 'test_description', description: jsonData["TestcaseDescription"] });
-}
+  async addAnnotations(jsonData: { [x: string]: any }) {
+    this.testInfo.annotations.push({
+      type: "test_id",
+      description: jsonData["Testcase"],
+    });
+    this.testInfo.annotations.push({
+      type: "test_key",
+      description: jsonData["TestKey"],
+    });
+    this.testInfo.annotations.push({
+      type: "test_summary",
+      description: jsonData["TestSummary"],
+    });
+    this.testInfo.annotations.push({
+      type: "test_description",
+      description: jsonData["TestcaseDescription"],
+    });
+  }
 
-async generateRandomAplhabets(length: number) {
-    let result = '';
-    const characters = 'abcdefghijklmnopqrstuvwxyz';
+  async generateRandomAplhabets(length: number) {
+    let result = "";
+    const characters = "abcdefghijklmnopqrstuvwxyz";
     const charactersLength = characters.length;
     let counter = 0;
     while (counter < length) {
@@ -26,11 +38,14 @@ async generateRandomAplhabets(length: number) {
       counter += 1;
     }
     return result;
-}
+  }
 
-constructor(public page : Page, public testInfo : TestInfo){
+  async readJsonFile(path: string) {
+    JSON.parse(fs.readFileSync(path, "utf-8"));
+  }
+  
+  constructor(public page: Page, public testInfo: TestInfo) {
     this.page = page;
     this.testInfo = testInfo;
-}
-
+  }
 }

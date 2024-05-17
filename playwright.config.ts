@@ -31,15 +31,18 @@ const testDir = defineBddConfig({
 export default defineConfig({
   //globalSetup: `./src/configs/GlobalSetup`,
 
-  //globalTeardown: './src/configs/GlobalTeardown',
+  globalTeardown: './src/main/configs/GlobalTeardown',
 
-  //testDir: './src/test/scriptLibrary/', // Uncomment this for test runner execution
+  testDir: './src/test/scriptLibrary/', // Uncomment this for test runner execution
 
-  testDir, // Uncomment this for Cucumber BDD execution
+  //testDir, // Uncomment this for Cucumber BDD execution
 
   fullyParallel: true,
 
-  outputDir: './reports/trace-results' /* To store the trace results */,
+  /* Folder for test artifacts such as screenshots, videos, traces, etc. */
+  outputDir: './reports/artifacts',
+
+  //outputDir: './reports/trace-results' /* To store the trace results */,
 
   reporter: [
     /* Enable the required report format */
@@ -50,7 +53,7 @@ export default defineConfig({
 
     //['json', { outputFile: './reports/json-report/results.json' }],
 
-    //['junit', { outputFile: './reports/junit-report/results.xml' }],
+    //['junit', {embedAnnotationsAsProperties: true, embedAttachmentsAsProperty: 'testrun_evidence', outputFile: './reports/junit-report/results.xml' }],
 
     [`./src/main/utils/ReportHelper.ts`] /* Custom report format with logs */,
 
@@ -69,23 +72,26 @@ export default defineConfig({
       },
     ] /* Allure report configuration */,
 
-    //[`html`, { outputFolder: './reports/html-report', open: 'never' }],
+    [`html`, { outputFolder: './reports/html-report', open: 'never' }],
 
     //['blob', { outputDir: './reports/blob-report', fileName: `report-${os.platform()}.zip` }]
   ],
 
   forbidOnly: !!process.env.CI,
 
-  retries: process.env.CI ? 2 : 1,
+  retries: process.env.CI ? 2 : undefined,
 
   workers: process.env.CI ? 1 : undefined,
 
   timeout: 60 * 1000,
 
   use: {
-    trace: 'on',
-    video: process.env.CI ? 'retain-on-failure' : 'retain-on-failure',
-    screenshot: 'only-on-failure',
+    /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
+    actionTimeout: 0,
+    trace: 'on-first-retry',
+    video: 'on-first-retry',
+    viewport: { width: 1280, height: 500 },
+    screenshot: 'on',
   },
 
   /* Configure projects for major browsers */
