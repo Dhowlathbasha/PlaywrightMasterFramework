@@ -18,7 +18,7 @@ import * as os from "os";
 // }
 
 dotenv.config({
-  path: `./resource/environments/${process.env.NODE_ENV ? process.env.NODE_ENV : 'qa'}.env`,
+  path: `.src/test/resource/environments/${process.env.NODE_ENV ? process.env.NODE_ENV : 'qa'}.env`,
 })
 
 const testDir = defineBddConfig({
@@ -73,6 +73,14 @@ export default defineConfig({
     ] /* Allure report configuration */,
 
     [`html`, { outputFolder: './reports/html-report', open: 'never' }],
+    ['html', { open: 'never', outputFolder: "./test-results/report" }],
+    ["junit", { outputFile: "./test-results/results/results.xml" }],
+    ["json", { outputFile: "./test-results/results/results.json" }],
+    ["./src/framework/logger/TestListener.ts"],
+    ['monocart-reporter', {
+      name: "Automation Report",
+      outputFile: './test-results/report/execution.html',
+    }],
 
     //['blob', { outputDir: './reports/blob-report', fileName: `report-${os.platform()}.zip` }]
   ],
@@ -101,6 +109,22 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
+        viewport: { width: 1980, height: 1080 },
+        acceptDownloads: true,
+        video: 'retain-on-failure',
+        trace: 'retain-on-failure',
+        screenshot: 'only-on-failure',
+        headless: false,
+        launchOptions: {
+          slowMo: 0,
+        },
+        //baseURL: '/',
+      },
+    },
+    {
+      name: 'firefox',
+      use: {
+        ...devices['Desktop Firefox'],
         viewport: { width: 1980, height: 1080 },
         acceptDownloads: true,
         video: 'retain-on-failure',
