@@ -28,7 +28,7 @@ const BrowserConstants = {
     REPORT_TITLE : "Test Execution Report",
     //TODO: Always set "reports" instead of test-results
     RESULTS_PATH : "./test-results/results", 
-    // Resukts Path should be attached with results.xml --> RESULTS_PATH + "/results.xml"
-    JUNIT_RESULTS_PATH : "./test-results/results/results.xml"
+    // Results Path should be attached with results.xml --> RESULTS_PATH + "/results.xml"
+    //JUNIT_RESULTS_PATH : "./test-results/results/results.xml"
+    JUNIT_RESULTS_PATH : () => {return  `${CommonConstants.RESULTS_PATH}/results.xml`}
 }
-
