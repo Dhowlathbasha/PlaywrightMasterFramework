@@ -1,4 +1,5 @@
 {
+    "editor.formatOnSave": true,
     "editor.fontLigatures": false,
     "editor.fontVariations": false,
     "editor.fontWeight": "normal",
@@ -8,5 +9,21 @@
     "python.analysis.inlayHints.functionReturnTypes": true,
     "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
     "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-    "python.analysis.inlayHints.pytestParameters": true
+    "python.analysis.inlayHints.pytestParameters": true,
+    "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" },
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.rulers": [80],
+	"eslint.probe": [
+		"javascript",
+		"javascriptreact",
+		"json",
+		"jsonc",
+		"markdown",
+		"typescript",
+		"typescriptreact",
+		"yaml"
+	],
+	"eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
+	"eslint.useFlatConfig": true,
+	"typescript.tsdk": "node_modules/typescript/lib"
 }

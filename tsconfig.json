@@ -20,11 +20,12 @@
     "paths": {
       "@ngx-lorem-ipsum/": ["./node_modules/ngx-lorem-ipsum/lib/"],
       "@pages/*": ["./src/main/ui/pages/*"],
-      "@utils/*": ["./src/main/utils/*"],
+      "@utils/*": ["src/main/supportLibraries/*"],
       "@fixtures/*": ["./src/main/configs/fixtures/*"],
       "resources": ["./src/test/resource/*"]
     },
     "lib": [
+      "ESNext",
       "es2021",
       "dom",
       "es6"
@@ -41,7 +42,7 @@
     // "moduleDetection": "auto",                        /* Control what method is used to detect module-format JS files. */
 
     /* Modules */
-    "module": "commonjs" /* Specify what module code is generated. */,
+    "module": "CommonJS" /* Specify what module code is generated. */,
     "rootDir": "./" /* Specify the root folder within your source files. */,
     "moduleResolution": "Node" /* Specify how TypeScript looks up a file from a given module specifier. */,
     // "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */

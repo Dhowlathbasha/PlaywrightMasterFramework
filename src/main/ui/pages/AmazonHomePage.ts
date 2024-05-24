@@ -1,5 +1,5 @@
 import { test, Page,TestInfo, Locator, expect } from '@playwright/test'
-import { PlaywrightActions } from '../../utils/PlaywrightActions'
+import { PlaywrightActions } from '../../supportLibraries/PlaywrightActions'
 
 export default class AmazonHomePage { 
 

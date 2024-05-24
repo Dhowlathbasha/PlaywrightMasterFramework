@@ -1,29 +1,14 @@
 import { FullConfig, FullResult, Reporter, Suite, TestCase, TestError, TestResult, TestStep, } from '@playwright/test/reporter'
-import winston from 'winston'
 import moment from 'moment'
-
-const console = new winston.transports.Console()
-
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  transports: [
-    // - Write all logs with importance level of `info` or less than it
-    new winston.transports.File({
-      filename: './reports/logs/info.log',
-      level: 'info',
-    }),
-    new winston.transports.File({
-      filename: './reports/logs/error.log',
-      level: 'error',
-    }),
-  ],
-})
-
-// Writes logs to console
-logger.add(console)
+import logger from './CustomLogger'
 
 export default class CustomReporterConfig implements Reporter {
+  onTestBegin(test: TestCase): void {
+    logger.info(
+      this.fetch_current_time() + ` -> Test Case Started : ${test.title}`
+    )
+  }
+
   onBegin(config: FullConfig<{}, {}>, suite: Suite): void {
     logger.info(
       this.fetch_current_time() +
@@ -31,11 +16,6 @@ export default class CustomReporterConfig implements Reporter {
     )
   }
 
-  onTestBegin(test: TestCase): void {
-    logger.info(
-      this.fetch_current_time() + ` -> Test Case Started : ${test.title}`
-    )
-  }
 
   onTestEnd(test: TestCase, result: TestResult): void {
     logger.info(
@@ -76,4 +56,10 @@ export default class CustomReporterConfig implements Reporter {
   fetch_current_time() {
     return moment().format('DD-MMM-YYYY hh:mm:ss.SSS')
   }
+
+  private printLogs(msg: string, separator: string) {
+    logger.info(separator);
+    logger.info(`${msg.toUpperCase()}`);
+    logger.info(separator);
+}
 }

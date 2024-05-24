@@ -1,8 +1,8 @@
 import { test as baseTest } from 'playwright-bdd'
 import AmazonHomePage from '../../ui/pages/AmazonHomePage';
-import SupportUtils from '../../utils/SupportUtils'
-import { PlaywrightActions } from '../../utils/PlaywrightActions'
-import ExcelActions from '../../utils/ExcelActions'
+import SupportUtils from '../../supportLibraries/SupportUtils'
+import { PlaywrightActions } from '../../supportLibraries/PlaywrightActions'
+import ExcelActions from '../../supportLibraries/ExcelActions'
 import BoilerHomePage from '../../ui/pages/BoilerHomepage'
 
 type pages = {

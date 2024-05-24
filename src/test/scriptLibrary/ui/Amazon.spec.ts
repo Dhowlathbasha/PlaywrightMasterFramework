@@ -1,5 +1,5 @@
 import { test as amazon, expect } from '@fixtures/pageFixture'
-import excelActions from '../../../main/utils/ExcelActions'
+import excelActions from '../../../main/supportLibraries/ExcelActions'
 import { firefox } from 'playwright'
 
 amazon("Amazon Home page", async({page,amazonHomePage,excelActions})=>{
