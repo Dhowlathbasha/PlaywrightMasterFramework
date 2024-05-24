@@ -21,11 +21,21 @@ export default class APIActions {
         return new SOAPRequest();
     }
 
-     /**
-     * Returns Request header instance
-     * @returns 
-     */
-      public get header(): RequestHeader {
+    /**
+    * Returns Request header instance
+    * @returns 
+    */
+    public get header(): RequestHeader {
         return new RequestHeader();
     }
+
+    //************************    mocking api     ************************
+
+    async mockApi(endpointURL: string, ...jsonPayload: any) {
+        console.log(jsonPayload);
+        await this.page.route(endpointURL, async (route) => {
+            await route.fulfill(jsonPayload);
+        });
+    }
+
 }

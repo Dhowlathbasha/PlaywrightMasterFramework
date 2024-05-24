@@ -108,8 +108,6 @@ export default defineConfig({
 
   timeout: Number.parseInt(process.env.TEST_TIMEOUT as string, 10) * waitTimeInMin,
 
-
-
   /* Configure projects for major browsers */
 
   projects: [

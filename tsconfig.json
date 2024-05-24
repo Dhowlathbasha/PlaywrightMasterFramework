@@ -20,7 +20,7 @@
     "paths": {
       "@ngx-lorem-ipsum/": ["./node_modules/ngx-lorem-ipsum/lib/"],
       "@pages/*": ["./src/main/ui/pages/*"],
-      "@utils/*": ["src/main/supportLibraries/*"],
+      "@utils/*": ["./src/main/supportLibraries/*"],
       "@fixtures/*": ["./src/main/configs/fixtures/*"],
       "resources": ["./src/test/resource/*"]
     },
