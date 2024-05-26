@@ -48,4 +48,25 @@ export default class SupportUtils {
     this.page = page;
     this.testInfo = testInfo;
   }
+
+  async readValuesFromTextFile(filePath: string): Promise<any> {
+    if (await this.exists(filePath)) {
+      return fs.readFileSync(`${filePath}`, `utf-8`);
+    }
+  }
+
+  async writeDataIntoTextFile(
+    filePath: number | fs.PathLike | string,
+    data: string | NodeJS.ArrayBufferView
+  ): Promise<void> {
+    fs.writeFile(filePath, data, (error) => {
+      if (error) throw error;
+    });
+  }
+
+  async exists(path: string) {
+    if (fs.existsSync(path)) {
+      return path;
+    }
+  }
 }
