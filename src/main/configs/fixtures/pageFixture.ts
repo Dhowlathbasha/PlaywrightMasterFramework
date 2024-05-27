@@ -4,6 +4,7 @@ import SupportUtils from '../../supportLibraries/SupportUtils'
 import PlaywrightActions from '../../supportLibraries/PlaywrightActions'
 import ExcelActions from '../../supportLibraries/ExcelActions'
 import BoilerHomePage from '@pages/BoilerHomepage'
+import AxeBuilder from '@axe-core/playwright'
 
 type pages = {
   actions: PlaywrightActions
@@ -11,6 +12,7 @@ type pages = {
   boilerHomePage:BoilerHomePage
   supportUtils: SupportUtils
   excelActions: ExcelActions
+  axebuilder : AxeBuilder
 }
 
 const testPages = baseTest.extend<pages>({
@@ -31,6 +33,11 @@ const testPages = baseTest.extend<pages>({
     await use(new ExcelActions(page,test.info()))
   },
   
+  axebuilder: async ({ page }, use, testInfo) => {
+    //await use(new AxeBuilder({page}))
+    const builder = new AxeBuilder({page})
+    await use (builder)
+  }
 })
 
 export const test = testPages

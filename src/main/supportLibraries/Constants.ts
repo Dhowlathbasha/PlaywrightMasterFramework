@@ -32,3 +32,11 @@ export const CommonConstants = {
   JUNIT_RESULTS_PATH: () => `${CommonConstants.RESULTS_PATH}/results.xml`,
 };
 
+export const DBConstants = {
+   PROTOCOL : ';PROTOCOL=TCPIP',
+   CERTIFICATE : ';trustServerCertificate=true;encrypt=false',
+   USER : 'user:',
+   PASSWORD : 'password:',
+   CONNECTION_STRING : 'connectString:',
+}
+

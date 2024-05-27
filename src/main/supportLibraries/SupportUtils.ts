@@ -3,6 +3,51 @@ import moment from "moment";
 import fs from "fs";
 
 export default class SupportUtils {
+
+  constructor(public page: Page, public testInfo: TestInfo) {
+  }
+
+  /**
+    * Generates date based on the input
+    * @param format date format
+    * @param days increment OR decrement the days
+    * @param months increment OR decrement the months
+    * @param years increment OR decrement the years
+    * @returns 
+    */
+  async dateGenerator(format: string, days: number, months: number, years: number) {
+    const date = moment().add(days, 'd').add(months, 'M').add(years, 'y')
+      .format(format);
+    return date;
+  }
+
+  /**
+   * Customizes the date that has been given as input based on other input parameter
+   * @param date to be customized
+   * @param format date format
+   * @param days increment OR decrement the days
+   * @param months increment OR decrement the months
+   * @param years increment OR decrement the years
+   * @returns 
+   */
+  async dateCustomizer(date: string, format: string, days: number, months: number, years: number) {
+    const customDate = moment(date, format).add(days, 'd').add(months, 'M').add(years, 'y')
+      .format(format);
+    return customDate;
+  }
+
+  /**
+   * Generates time in hr:min format based on the input
+   * @param format time format
+   * @param hours increment OR decrement the hours
+   * @param minutes increment OR decrement the minutes
+   * @returns 
+   */
+  async timeGenerator(format: string, hours: number, minutes: number) {
+    const time = moment().add(minutes, 'm').add(hours, 'h').format(format);
+    return time;
+  }
+
   async addDaysToCurrentDate(addDays: moment.DurationInputArg1) {
     let date = moment().add(addDays, "d").toDate();
     let formattedDate = moment(date).format("DD-MMM-YYYY hh:mm:ss.SSS");
@@ -42,11 +87,6 @@ export default class SupportUtils {
 
   async readJsonFile(path: string) {
     JSON.parse(fs.readFileSync(path, "utf-8"));
-  }
-  
-  constructor(public page: Page, public testInfo: TestInfo) {
-    this.page = page;
-    this.testInfo = testInfo;
   }
 
   async readValuesFromTextFile(filePath: string): Promise<any> {

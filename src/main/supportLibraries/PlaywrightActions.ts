@@ -3,9 +3,9 @@ import { Locator, Page, expect, test, TestInfo } from "@playwright/test";
 import * as fs from "fs";
 import * as pdfjslib from "pdfjs-dist-es5";
 import * as Constants from "../supportLibraries/Constants";
-import browserActions from "./Actions/browserActions";
+import BrowserActions from "./Actions/BrowserActions";
 
-export default class PlaywrightActions extends browserActions {
+export default class PlaywrightActions extends BrowserActions {
 
   /**
    * @param {import('@playwright/test').Page} page
@@ -13,8 +13,6 @@ export default class PlaywrightActions extends browserActions {
    */
   constructor(public page: Page, public testInfo: TestInfo) {
     super(page, testInfo);
-    this.page = page;
-    this.testInfo = testInfo;
   }
 
   async getPdfPageText(pdf: any, pageNo: number) {

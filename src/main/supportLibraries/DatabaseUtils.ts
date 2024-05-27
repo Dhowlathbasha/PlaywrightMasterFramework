@@ -1,7 +1,6 @@
 import * as sql from "mssql";
 import oracledb from "oracledb";
-import CommonConstants from "../constants/CommonConstants";
-import DBConstants from "../constants/DBConstants";
+import * as Constants from "./Constants";
 
 export default class DBUtil {
     /**
@@ -12,7 +11,7 @@ export default class DBUtil {
      */
     public static async executeMSSQLQuery(dbConfig: string, query: string) {
         try {
-            const pool = await sql.connect(`${dbConfig}${DBConstants.CERTIFICATE}`);
+            const pool = await sql.connect(`${dbConfig}${Constants.DBConstants.CERTIFICATE}`);
             const result = await pool.request().query(query);
             return { rows: result.recordset, rowsAffected: result.rowsAffected };
         } catch (err) {
@@ -27,11 +26,11 @@ export default class DBUtil {
      * @returns record set
      */
     public static async executeOracleQuery(dbConfig: string, query: string) {
-        const configs = dbConfig.split(CommonConstants.SEMICOLON);
+        const configs = dbConfig.split(Constants.CommonConstants.SEMICOLON);
         const config = {
-            user: configs[0].replace(DBConstants.USER, CommonConstants.BLANK).trim(),
-            password: configs[1].replace(DBConstants.PASSWORD, CommonConstants.BLANK).trim(),
-            connectString: configs[2].replace(DBConstants.CONNECTION_STRING, CommonConstants.BLANK).trim(),
+            user: configs[0].replace(Constants.DBConstants.USER, Constants.CommonConstants.BLANK).trim(),
+            password: configs[1].replace(Constants.DBConstants.PASSWORD, Constants.CommonConstants.BLANK).trim(),
+            connectString: configs[2].replace(Constants.DBConstants.CONNECTION_STRING, Constants.CommonConstants.BLANK).trim(),
         };
         let connection: oracledb.Connection | undefined ;
         try {
@@ -61,7 +60,7 @@ export default class DBUtil {
         const ibmdb = require('ibm_db');
         let connection: any;
         try {
-            connection = ibmdb.openSync(`${dbConfig}${DBConstants.PROTOCOL}`);
+            connection = ibmdb.openSync(`${dbConfig}${Constants.DBConstants.PROTOCOL}`);
             const result = connection.querySync(query);
             return { rows: result, rowsAffected: result.length };
         } catch (error) {

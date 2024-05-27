@@ -1,19 +1,19 @@
 import test from "@playwright/test";
 import soapRequest from "easy-soap-request";
-import format from "xml-formatter";
 import fs from 'fs';
-import SOAPResponse from "./SOAPResponse";
+import SOAPResponse from "./SoapResponse";
 import StringUtil from "../supportLibraries/StringOps";
 import * as Constants from "../supportLibraries/Constants";
 
 export default class SOAPRequest {
     /**
      * Creates request body by replacing the input parameters
-     * @param xmlFileName 
+     * @param xmlFileName  
      * @param data 
      * @returns 
      */
     private async createRequestBody(xmlFileName: string, data: any): Promise<string> {
+        const format = require('xml-formatter');
         let xml = fs.readFileSync(Constants.CommonConstants.SOAP_XML_REQUEST_PATH + xmlFileName, 'utf-8');
         xml = StringUtil.formatStringValue(xml, data);
         console.log(`SOAP request : \n${format(xml, { collapseContent: true })}`);
@@ -32,7 +32,8 @@ export default class SOAPRequest {
      */
     public async post(endPoint: string, requestHeader: any, fileName: string, 
         requestData : any, description: string): Promise<SOAPResponse> {
-        let soapResponse: SOAPResponse;
+        const format = require('xml-formatter');
+        let soapResponse!: SOAPResponse;
         await test.step(`Making post request for ${description}`, async () => {
             const url = process.env.SOAP_API_BASE_URL + endPoint;
             console.log(`URL: ${url}`);

@@ -20,20 +20,3 @@ export function fetchBrowserChannel() {
     const browser = `${process.env.BROWSER}`;
 
     return browserChannel.get(browser);  }
-
-
-
-//   public static channel(browser: string) {
-//     let browserChannel;
-//     if (browser === BrowserConstants.CHROME) {
-//       browserChannel = BrowserConstants.CHROME;
-//     } else if (browser === BrowserConstants.EDGE) {
-//       browserChannel = BrowserConstants.MSEDGE;
-//     } else {
-//       browserChannel = BrowserConstants.BLANK;
-//     }
-//     return browserChannel;
-//   }
-//}
-
-//console.log(new BrowserConfig().decideBrowserType());

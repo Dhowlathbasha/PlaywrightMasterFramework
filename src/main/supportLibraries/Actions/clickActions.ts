@@ -1,15 +1,11 @@
-import PlaywrightActions from "@utils/PlaywrightActions";
 import { Locator } from "playwright/test";
-import { allure } from "allure-playwright";
 import { Page, TestInfo, test } from "@playwright/test";
 import ElementActions from "./ElementActions";
 
-export default class clickActions extends ElementActions {
+export default class ClickActions extends ElementActions {
 
   constructor(public page: Page, public testInfo: TestInfo) {
     super(page, testInfo);
-    this.page = page;
-    this.testInfo = testInfo;
   }
 
   //************************  Element operations  ************************
@@ -92,9 +88,10 @@ export default class clickActions extends ElementActions {
     return this;
   }
 
-  async click_byLoc(locator: Locator, description: string) {
-    await this.embedScreenshot(description);
-    await locator.click();
+  async click_byLoc(locator: string | Locator, description: string) {
+    const updatedLocator =
+      typeof locator === "string" ? this.page.locator(locator) : locator;
+    await updatedLocator.click();
   }
 
   /**

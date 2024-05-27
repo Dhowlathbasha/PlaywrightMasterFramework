@@ -1,14 +1,11 @@
-import PlaywrightActions from "@utils/PlaywrightActions";
 import { Page, TestInfo, test } from "@playwright/test";
-import clickActions from "./clickActions";
+import ClickActions from "./ClickActions";
 
 
-export default class browserActions extends clickActions {
+export default class BrowserActions extends ClickActions {
 
   constructor(public page: Page, public testInfo: TestInfo) {
     super(page, testInfo);
-    this.page = page;
-    this.testInfo = testInfo;
   }
   //************************  Page operations  ************************
 

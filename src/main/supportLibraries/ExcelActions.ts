@@ -50,7 +50,5 @@ export default class ExcelActions{
     * @param {import('@playwright/test').TestInfo} testInfo
     */
      constructor(public page : Page, public testInfo: TestInfo) {
-      this.page = page;
-      this.testInfo = testInfo;
   }
 }

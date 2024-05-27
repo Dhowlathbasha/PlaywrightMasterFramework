@@ -1,6 +1,5 @@
 import { Page, Locator, expect, TestInfo } from "@playwright/test";
 import BaseActions from "./BaseActions";
-import { allure } from "allure-playwright";
 
 export default class ElementActions extends BaseActions {
 
@@ -10,8 +9,6 @@ export default class ElementActions extends BaseActions {
    */
   constructor(public page: Page, public testInfo: TestInfo) {
     super(page, testInfo);
-    this.page = page;
-    this.testInfo = testInfo;
   }
 
   //************************  Page operations  ************************
@@ -23,9 +20,10 @@ export default class ElementActions extends BaseActions {
     return this;
   }
 
-  async sendKey_byLoc(locator: Locator, text: string, description: string) {
-    await this.embedScreenshot(description);
-    await locator.fill(text);
+  async sendKey_byLoc(locator: string | Locator, text: string) {
+    const updatedLocator =
+      typeof locator === "string" ? this.page.locator(locator) : locator;
+    await updatedLocator.fill(text);
   }
   //************************  Input operations  ************************
 

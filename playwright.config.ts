@@ -18,6 +18,8 @@ const testDir = defineBddConfig({
   // ...other playwright-bdd options
 });
 
+let testName = process.env.TEST_NAME ?.trim() as string;
+
 export default defineConfig({
 
   testDir: "./src/test/scriptLibrary/", // Uncomment this for test runner execution
@@ -142,6 +144,14 @@ export default defineConfig({
         },
         //baseURL: '/',
       },
+    },
+    {
+      name: "local",
+      testMatch: `*${testName}*`,
+    },
+    {
+      name: "suite",
+      testMatch: "*.test.ts",
     },
     // {
     //   name: `Device`,
