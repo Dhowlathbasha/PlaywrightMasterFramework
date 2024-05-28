@@ -6,6 +6,8 @@ export default class ClickActions extends ElementActions {
 
   constructor(public page: Page, public testInfo: TestInfo) {
     super(page, testInfo);
+    this.page = page;
+    this.testInfo = testInfo;
   }
 
   //************************  Element operations  ************************

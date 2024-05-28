@@ -6,6 +6,8 @@ export default class BrowserActions extends ClickActions {
 
   constructor(public page: Page, public testInfo: TestInfo) {
     super(page, testInfo);
+    this.page = page;
+    this.testInfo = testInfo;
   }
   //************************  Page operations  ************************
 
@@ -75,7 +77,8 @@ export default class BrowserActions extends ClickActions {
    */
   async closeTabById(options?: { tabId?: number }) {
     if (options?.tabId) {
-      await this.page.context().pages()[options.tabId].close();
+      const updatepage = this.page.context().pages()[options.tabId] as Page
+      await updatepage.close();
     } else {
       await this.page.close();
     }
@@ -90,9 +93,10 @@ export default class BrowserActions extends ClickActions {
       const pages: Array<Page> = this.page.context().pages();
 
       for (let count = 0; count < pages.length; count++) {
-        const pageTitle = pages[count].title();
+        const updatedpage = pages[count] as Page
+        const pageTitle = updatedpage.title();
         if (options.tabTitle === (await pageTitle)) {
-          this.page = this.page.context().pages()[count];
+          this.page = this.page.context().pages()[count] as Page;
           this.page.close();
           break;
         }

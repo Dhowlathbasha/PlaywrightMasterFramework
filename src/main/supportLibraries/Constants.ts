@@ -20,7 +20,7 @@ export const CommonConstants = {
   DOWNLOAD_PATH: "./test-results/downloads/",
   SOAP_XML_REQUEST_PATH: "src/resources/API/SOAP/",
   REST_JSON_REQUEST_PATH: "src/resources/API/REST/",
-  TEST_FOLDER_PATH: "../../tests/",
+  TEST_FOLDER_PATH: "./tests/",
   TEST_SUITE_FILE_FORMAT: ".test.ts",
   PARALLEL_MODE: "parallel",
   SERIAL_MODE: "serial",

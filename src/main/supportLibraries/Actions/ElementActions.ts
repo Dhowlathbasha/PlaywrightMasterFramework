@@ -9,6 +9,8 @@ export default class ElementActions extends BaseActions {
    */
   constructor(public page: Page, public testInfo: TestInfo) {
     super(page, testInfo);
+    this.page = page;
+    this.testInfo = testInfo;
   }
 
   //************************  Page operations  ************************

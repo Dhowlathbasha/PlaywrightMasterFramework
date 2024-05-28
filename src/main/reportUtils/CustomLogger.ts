@@ -9,7 +9,7 @@ const logger = winston.createLogger({
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.uncolorize({ level: true, message: true, raw: true }),
-        winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+        winston.format.timestamp({ format: "DD-MMM-YYYY hh:mm:ss.SSS" }),
         winston.format.align(),
         winston.format.printf(
           (info) => `${info.timestamp} ${info.level}: ${info.message}`
@@ -20,7 +20,7 @@ const logger = winston.createLogger({
       filename: "test-results/logs/execution.log",
       format: winston.format.combine(
         winston.format.uncolorize({ level: true, message: true, raw: true }),
-        winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+        winston.format.timestamp({ format: "DD-MMM-YYYY hh:mm:ss.SSS" }),
         winston.format.align(),
         winston.format.printf(
           (info) => `${info.timestamp} ${info.level}: ${info.message}`

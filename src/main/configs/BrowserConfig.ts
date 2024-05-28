@@ -1,4 +1,4 @@
-import * as Constants from "../supportLibraries/Constants"
+import * as Constants from "@utils/Constants"
 
 export function fetchBrowserType() {
     const browserType = new Map()

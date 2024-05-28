@@ -52,23 +52,25 @@ export default class BaseActions {
     }
   ) {
     if (options?.tabId) {
-      this.page = this.page.context().pages()[options.tabId];
+      let tabNumber = options.tabId
+      this.page = this.page.context().pages()[tabNumber] as Page;
     } else if (options?.tabTitle) {
-      const pages: Array<Page> = this.page.context().pages();
+      const pages: Page[] = this.page.context().pages();
 
       for (let count = 0; count < pages.length; count++) {
-        const pageTitle = pages[count].title();
+        const updatedpage = pages[count] as Page
+        const pageTitle = updatedpage.title();
         if (options.tabTitle === pageTitle) {
-          this.page = this.page.context().pages()[count];
+          this.page = this.page.context().pages()[count] as Page;
           break;
         }
       }
     } else if (options?.tabTitle && options?.tabId) {
-      const pages: Array<Page> = this.page.context().pages();
-
-      const pageTitle = pages[options.tabId].title();
+      const pages: Page[] = this.page.context().pages();
+      const updatedpage = pages[options.tabId] as Page
+      const pageTitle = updatedpage.title();
       if (options.tabTitle === pageTitle) {
-        this.page = this.page.context().pages()[options.tabId];
+        this.page = this.page.context().pages()[options.tabId] as Page;
       }
     }
 

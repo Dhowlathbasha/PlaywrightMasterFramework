@@ -13,6 +13,8 @@ export default class PlaywrightActions extends BrowserActions {
    */
   constructor(public page: Page, public testInfo: TestInfo) {
     super(page, testInfo);
+    this.page = page;
+    this.testInfo = testInfo;
   }
 
   async getPdfPageText(pdf: any, pageNo: number) {

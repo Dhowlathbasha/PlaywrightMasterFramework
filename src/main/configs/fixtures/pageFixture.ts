@@ -1,8 +1,8 @@
 import { test as baseTest , TestInfo, Page} from '@playwright/test'
 import AmazonHomePage from '@pages/AmazonHomePage'
-import SupportUtils from '../../supportLibraries/SupportUtils'
-import PlaywrightActions from '../../supportLibraries/PlaywrightActions'
-import ExcelActions from '../../supportLibraries/ExcelActions'
+import SupportUtils from '@utils/SupportUtils'
+import PlaywrightActions from '@utils/PlaywrightActions'
+import ExcelActions from '@utils/ExcelActions'
 import BoilerHomePage from '@pages/BoilerHomepage'
 import AxeBuilder from '@axe-core/playwright'
 
@@ -33,8 +33,7 @@ const testPages = baseTest.extend<pages>({
     await use(new ExcelActions(page,test.info()))
   },
   
-  axebuilder: async ({ page }, use, testInfo) => {
-    //await use(new AxeBuilder({page}))
+  axebuilder: async ({ page }, use) => {
     const builder = new AxeBuilder({page})
     await use (builder)
   }

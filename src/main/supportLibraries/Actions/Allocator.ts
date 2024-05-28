@@ -1,4 +1,4 @@
-import * as Constants from '../Constants'
+import * as Constants from '@utils/Constants'
 import path from 'path';
 import fs from 'fs'
 
@@ -27,6 +27,14 @@ export default class Allocator {
     }
 
     public static deleteFiles(directory: string) {
+
+        if (fs.existsSync(directory)) {
+            console.log(directory, " exists!");
+          } else {
+            console.log(directory, " does not exist!");
+            fs.mkdirSync(directory);
+          }
+
         const files = fs.readdirSync(directory);
         for (const file of files) {
             if (file.includes(Constants.CommonConstants.TEST_SUITE_FILE_FORMAT)) { fs.unlinkSync(path.join(directory, file)); }

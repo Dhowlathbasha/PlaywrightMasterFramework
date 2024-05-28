@@ -7,7 +7,7 @@ import * as BrowserConfig from "./src/main/configs/BrowserConfig";
 const waitTimeInMin: number = 60 * 1000;
 
 dotenv.config({
-  path: `.src/test/resource/environments/${process.env.NODE_ENV ? process.env.NODE_ENV : "qa"
+  path: `./src/test/resource/environments/${process.env.NODE_ENV ? process.env.NODE_ENV : "qa"
     }.env`,
 });
 
@@ -22,12 +22,12 @@ let testName = process.env.TEST_NAME ?.trim() as string;
 
 export default defineConfig({
 
-  testDir: "./src/test/scriptLibrary/", // Uncomment this for test runner execution
+  testDir: "./src/test/scriptLibrary/ui", // Uncomment this for test runner execution
   //testDir, // Uncomment this for Cucumber BDD execution
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-  outputDir: "./reports/artifacts",
-  //outputDir: './reports/trace-results' /* To store the trace results */,
+  outputDir: "./test-results/artifacts",
+  //outputDir: './test-results/trace-results' /* To store the trace results */,
 
   use: {
     /**
@@ -51,7 +51,7 @@ export default defineConfig({
     navigationTimeout: Number.parseInt(process.env.NAVIGATION_TIMEOUT as string, 10) * waitTimeInMin,
     trace: "on-first-retry",
     video: "retain-on-failure",
-    viewport: null,
+    viewport: null, 
     screenshot: { 
       mode: "only-on-failure",
       fullPage: true,
@@ -66,30 +66,29 @@ export default defineConfig({
 
     //[`line`],
     //['list', { printSteps: true }],
-    //['json', { outputFile: './reports/json-report/results.json' }],
-    //['junit', {embedAnnotationsAsProperties: true, embedAttachmentsAsProperty: 'testrun_evidence', outputFile: './reports/junit-report/results.xml' }],
-    [`./src/main/utils/ReportHelper.ts`] /* Custom report format with logs */,
+    //['json', { outputFile: './test-results/json-report/results.json' }],
+    //['junit', {embedAnnotationsAsProperties: true, embedAttachmentsAsProperty: 'testrun_evidence', outputFile: './test-results/junit-report/results.xml' }],
+    [`./src/main/reportUtils/ReportHelper.ts`] /* Custom report format with logs */,
     [
       `allure-playwright`,
       {
         environmentInfo: {
           OS: os.platform(),
           BROWSER: process.env.BROWSER?.toUpperCase(),
-          BASE_URL: process.env.BASE_URL,
           os_release: os.release(),
           os_version: os.version(),
           node_version: process.version,
         },
-        outputFolder: "./reports/allure-results",
+        outputFolder: "./test-results/allure-results",
         detail: true,
         open: "on-failure",
       },
     ] /* Allure report configuration */,
-    [`html`, { outputFolder: "./reports/html-report", open: "never" }],
-    ["html", { open: "never", outputFolder: "./test-results/report" }],
+    [`html`, { outputFolder: "./test-results/html-report", open: "never" }],
+    //["html", { open: "never", outputFolder: "./test-results/report" }],
     ["junit", { outputFile: "./test-results/results/results.xml" }],
     ["json", { outputFile: "./test-results/results/results.json" }],
-    ["./src/framework/logger/TestListener.ts"],
+    //["./src/framework/logger/TestListener.ts"],
     [
       "monocart-reporter",
       {
@@ -98,14 +97,14 @@ export default defineConfig({
       },
     ],
 
-    //['blob', { outputDir: './reports/blob-report', fileName: `report-${os.platform()}.zip` }]
+    //['blob', { outputDir: './test-results/blob-report', fileName: `report-${os.platform()}.zip` }]
   ],
 
   forbidOnly: !!process.env.CI,
 
-  retries: process.env.CI ? Number.parseInt(process.env.RETRIES as string) : undefined,
+  retries: process.env.CI ? 1 : undefined,
 
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? Number.parseInt(process.env.PARALLEL_THREAD as string, 10) : undefined,
   preserveOutput: "failures-only",
 
   timeout: Number.parseInt(process.env.TEST_TIMEOUT as string, 10) * waitTimeInMin,
@@ -117,15 +116,15 @@ export default defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        viewport: { width: 1980, height: 1080 },
-        acceptDownloads: true,
-        video: "retain-on-failure",
-        trace: "retain-on-failure",
-        screenshot: "only-on-failure",
-        headless: false,
-        launchOptions: {
-          slowMo: 0,
-        },
+        // viewport: { width: 1980, height: 1080 },
+        // acceptDownloads: true,
+        // video: "retain-on-failure",
+        // trace: "retain-on-failure",
+        // screenshot: "only-on-failure",
+        //headless: false,
+        // launchOptions: {
+        //   slowMo: 0,
+        // },
         //baseURL: '/',
       },
     },
@@ -133,26 +132,26 @@ export default defineConfig({
       name: "firefox",
       use: {
         ...devices["Desktop Firefox"],
-        viewport: { width: 1980, height: 1080 },
-        acceptDownloads: true,
-        video: "retain-on-failure",
-        trace: "retain-on-failure",
-        screenshot: "only-on-failure",
-        headless: false,
-        launchOptions: {
-          slowMo: 0,
-        },
+        // viewport: { width: 1980, height: 1080 },
+        // acceptDownloads: true,
+        // video: "retain-on-failure",
+        // trace: "retain-on-failure",
+        // screenshot: "only-on-failure",
+        // headless: false,
+        // launchOptions: {
+        //   slowMo: 0,
+        // },
         //baseURL: '/',
       },
     },
-    {
-      name: "local",
-      testMatch: `*${testName}*`,
-    },
-    {
-      name: "suite",
-      testMatch: "*.test.ts",
-    },
+    // {
+    //   name: "local",
+    //   testMatch: `*${testName}*`,
+    // },
+    // {
+    //   name: "suite",
+    //   testMatch: "*.test.ts",
+    // },
     // {
     //   name: `Device`,
     //   use: {

@@ -1,9 +1,10 @@
 import { test as baseTest } from 'playwright-bdd'
-import AmazonHomePage from '../../ui/pages/AmazonHomePage';
-import SupportUtils from '../../supportLibraries/SupportUtils'
-import { PlaywrightActions } from '../../supportLibraries/PlaywrightActions'
-import ExcelActions from '../../supportLibraries/ExcelActions'
-import BoilerHomePage from '../../ui/pages/BoilerHomepage'
+import SupportUtils from '@utils/SupportUtils'
+import PlaywrightActions from '@utils/PlaywrightActions'
+import ExcelActions from '@utils/ExcelActions'
+import BoilerHomePage from '@pages/BoilerHomepage'
+import AmazonHomePage from '@pages/AmazonHomePage';
+import AxeBuilder from '@axe-core/playwright'
 
 type pages = {
   actions: PlaywrightActions
@@ -11,6 +12,7 @@ type pages = {
   boilerHomePage:BoilerHomePage
   supportUtils: SupportUtils
   excelActions: ExcelActions
+  axebuilder : AxeBuilder
 }
 
 const testPages = baseTest.extend<pages>({
@@ -26,11 +28,13 @@ const testPages = baseTest.extend<pages>({
   supportUtils: async ({ page }, use) => {
     await use(new SupportUtils(page, test.info()))
   },
-
   excelActions: async ({ page }, use) => {
     await use(new ExcelActions(page,test.info()))
   },
-  
+  axebuilder: async ({ page }, use) => {
+    const builder = new AxeBuilder({page})
+    await use (builder)
+  }
 })
 
 export const test = testPages
