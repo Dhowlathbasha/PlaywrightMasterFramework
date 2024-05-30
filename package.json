@@ -4,7 +4,7 @@
   "description": "Plywright Framework",
   "main": "index.js",
   "scripts": {
-    "launch:Allocator":"cd ./src/main/supportLibraries/Actions & npx ts-node Allocator.ts",
+    "launch:Allocator": "cd ./src/main/supportLibraries/Actions & npx tsx Allocator.ts",
     "lint": "eslint . --ext .ts",
     "clean": "rm -rf out",
     "test:weblighthouse": "node ./src/test/qualitycheck/WebLighthouse.mjs",
@@ -12,7 +12,7 @@
     "//comment": "============================= API Testing  ===================================",
     "test:qa:api": "cross-env NODE_ENV='qa' npx playwright test --trace on ./src/test/scriptLibrary/api || true",
     "//comment1": "============================= UI Testing  ===================================",
-    "test:qa:ui": "cross-env NODE_ENV='qa' npx playwright test ",
+    "test:qa:ui": "cross-env NODE_ENV='qa' npx playwright test ./src/test/scriptLibrary/ui",
     "//comment2": "============================= Cucumber ===================================",
     "test:cucumber:qa": "cross-env NODE_ENV='qa' FORCE_COLOR=0 npx bddgen && npx playwright test",
     "//comment3": "============================= Allure Report Generation =================================",

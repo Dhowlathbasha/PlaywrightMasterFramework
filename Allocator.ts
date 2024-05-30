@@ -28,6 +28,7 @@ export default class Allocator {
 
     public static deleteFiles(directory: string) {
 
+        const fs = require("fs");
         if (fs.existsSync(directory)) {
             console.log(directory, " exists!");
           } else {
@@ -43,19 +44,19 @@ export default class Allocator {
 
     /**
   * Gets the value of command line argument
-  * @param argumentName 
+  * @param argumentName
   * @returns 
   */
-    public static getValueOf(argumentName: string) {
-        const argv = process.argv[2];
-        if (argv === undefined) {
-            throw new Error(`${argumentName} is not defined, please send ${argumentName} through CLI`);
-        }
-        if (argv.toUpperCase().includes(argumentName)) {
-            return argv.split("=")[1];
-        }
-        throw new Error(`Please send command line argument ${argumentName} with value`);
-    }
+    // public static getValueOf(argumentName: string) {
+    //     const argv = process.argv[2];
+    //     if (argv === undefined) {
+    //         throw new Error(`${argumentName} is not defined, please send ${argumentName} through CLI`);
+    //     }
+    //     if (argv.toUpperCase().includes(argumentName)) {
+    //         return argv.split("=")[1];
+    //     }
+    //     throw new Error(`Please send command line argument ${argumentName} with value`);
+    // }
 
     public static createTemplate(testList: string, sheet ?: string ) {
         const suiteTemplate = `/* eslint-disable no-tabs */
@@ -67,22 +68,22 @@ ${testList}
         return suiteTemplate;
     }
 
-    public static getFileNames(dirPath: string)  {
-        return new Promise((resolve, reject) => {
-            fs.readdir(dirPath, async (err, files) => {
-                if (err) {
-                    reject(`Error reading directory: ${err}`);
-                } 
-                else if(fs.statSync(dirPath).isDirectory()) {
-                     Allocator.getFileNames(dirPath)
-                  }
-                else {
-                    const filePaths = files.map(file => path.join(dirPath, file));
-                    resolve(filePaths);
-                }
-            });
-        });
-    }
+    // public static getFileNames(dirPath: string)  {
+    //     return new Promise((resolve, reject) => {
+    //         fs.readdir(dirPath, async (err, files) => {
+    //             if (err) {
+    //                 reject(`Error reading directory: ${err}`);
+    //             } 
+    //             else if(fs.statSync(dirPath).isDirectory()) {
+    //                  Allocator.getFileNames(dirPath)
+    //               }
+    //             else {
+    //                 const filePaths = files.map(file => path.join(dirPath, file));
+    //                 resolve(filePaths);
+    //             }
+    //         });
+    //     });
+    // }
 
     public static getFiles(dir:string, files = []) {
         const fileList = fs.readdirSync(dir)
