@@ -19,10 +19,11 @@
     "target": "es2021" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "paths": {
       "@ngx-lorem-ipsum/": ["./node_modules/ngx-lorem-ipsum/lib/"],
-      "@pages/*": ["./src/main/ui/pages/*"],
-      "@utils/*": ["./src/main/supportLibraries/*"],
-      "@fixtures/*": ["./src/main/configs/fixtures/*"],
-      "@data_folder/*": ["./data/*"],
+      "@pages/*": ["src/main/ui/pages/*"],
+      "@utils/*": ["src/main/supportLibraries/*"],
+      "@fixtures/*": ["src/main/configs/fixtures/*"],
+      "@data_folder/*": ["data/*"],
+      "@reporthelper/*":["src/main/supportLibraries/reportUtils/*"]
     },
     "lib": [
       "ESNext",
@@ -45,7 +46,7 @@
     "module": "CommonJS" /* Specify what module code is generated. */,
     "rootDir": "./" /* Specify the root folder within your source files. */,
     "moduleResolution": "Node" /* Specify how TypeScript looks up a file from a given module specifier. */,
-    // "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
+    "baseUrl": "./",                                  /* Specify the base directory to resolve non-relative module names. */
     // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     "typeRoots": [

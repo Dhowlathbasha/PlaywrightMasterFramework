@@ -29,7 +29,8 @@ test('has title', async ({ page,actions }) => {
     await actions.openurl('https://playwright.dev/',{waitUntil: "domcontentloaded"}) // Checking Fixture is Working or not
   
     // Click the get started link.
-    await page.getByRole('link', { name: 'Get started' }).click();
+    //await page.getByRole('link', { name: 'Get started' }).click();
+    await actions.click_byLoc(page.getByRole('link', { name: 'Get started' }),"")
   
     // Expects page to have a heading with the name of Installation.
     await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();

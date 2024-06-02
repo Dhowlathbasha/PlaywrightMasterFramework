@@ -3,7 +3,7 @@ import { Locator, Page, expect, test, TestInfo } from "@playwright/test";
 import * as fs from "fs";
 import * as pdfjslib from "pdfjs-dist-es5";
 import * as Constants from "../supportLibraries/Constants";
-import BrowserActions from "./Actions/BrowserActions";
+import BrowserActions from "./Actions/browserActions";
 
 export default class PlaywrightActions extends BrowserActions {
 

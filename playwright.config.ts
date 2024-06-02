@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import { defineBddConfig } from "playwright-bdd";
 import * as os from "os";
 import * as BrowserConfig from "./src/main/configs/BrowserConfig";
+import * as Constants from "./src/main/supportLibraries/Constants"
 
 const waitTimeInMin: number = 60 * 1000;
 
@@ -18,7 +19,7 @@ const testDir = defineBddConfig({
   // ...other playwright-bdd options
 });
 
-let testName = process.env.TEST_NAME ?.trim() as string;
+let testName = process.env.TEST_NAME?.trim() as string;
 const testcase_Directory = process.env.TESTCASE_DIR as string;
 export default defineConfig({
 
@@ -33,24 +34,24 @@ export default defineConfig({
      */
     channel: BrowserConfig.fetchBrowserChannel(),
     browserName: BrowserConfig.fetchBrowserType(),
-    deviceScaleFactor:undefined,
+    deviceScaleFactor: undefined,
     headless: false,
     launchOptions: {
       args: ["--start-maximized", "--disable-extensions", "--disable-plugins"],
       headless: false,
       timeout: Number.parseInt(process.env.BROWSER_LAUNCH_TIMEOUT as string, 10),
       slowMo: 0,
-      downloadsPath: "./test-results/downloads",
+      downloadsPath: Constants.CommonConstants.DOWNLOAD_PATH,
     },
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: Number.parseInt(process.env.ACTION_TIMEOUT as string, 10) * waitTimeInMin,
     acceptDownloads: true,
-    ignoreHTTPSErrors:true,
+    ignoreHTTPSErrors: true,
     navigationTimeout: Number.parseInt(process.env.NAVIGATION_TIMEOUT as string, 10) * waitTimeInMin,
     trace: "on-first-retry",
     video: "retain-on-failure",
-    viewport: null, 
-    screenshot: { 
+    viewport: null,
+    screenshot: {
       mode: "only-on-failure",
       fullPage: true,
     },
@@ -58,13 +59,11 @@ export default defineConfig({
   fullyParallel: true,
   reportSlowTests: null,
   reporter: [
-    /* Enable the required report format */
-
-    ['line',{}],
+    ['line'],
     //['list', { printSteps: true }],
     //['blob', { outputDir: './test-results/blob-report', fileName: `report-${os.platform()}.zip` }]
     [`./src/main/reportUtils/ReportHelper.ts`] /* Custom report format with logs */,
-    
+
     /* Allure report configuration */
     [
       `allure-playwright`,
@@ -82,16 +81,16 @@ export default defineConfig({
       },
     ],
     [`html`, { outputFolder: "./test-results/html-report", open: "never" }],
-    ["junit", { embedAnnotationsAsProperties: true, embedAttachmentsAsProperty: 'testrun_evidence', outputFile: "./test-results/junit-report/results.xml" }],
-    ["json", { outputFile: "./test-results/results/results.json" }],
+    ["junit", { embedAnnotationsAsProperties: true, embedAttachmentsAsProperty: 'testrun_evidence', outputFile: Constants.CommonConstants.JUNIT_RESULTS_PATH()}],
+    ["json", { outputFile: Constants.CommonConstants.JSON_RESULTS_PATH()}],
     [
       "monocart-reporter",
       {
         name: "Automation Report",
         outputFile: "./test-results/report/execution.html",
       },
-    ],
-  ],
+    ]]
+  ,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : undefined,
   workers: process.env.CI ? Number.parseInt(process.env.PARALLEL_THREAD as string, 10) : undefined,

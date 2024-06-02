@@ -1,5 +1,5 @@
 import { Page, TestInfo, test } from "@playwright/test";
-import ClickActions from "./ClickActions";
+import ClickActions from "./clickActions";
 
 
 export default class BrowserActions extends ClickActions {

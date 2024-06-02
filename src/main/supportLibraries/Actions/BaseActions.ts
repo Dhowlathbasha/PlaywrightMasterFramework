@@ -1,6 +1,7 @@
 import { Locator, Page, test, TestInfo, expect } from "@playwright/test";
 import * as fs from "fs";
 import { allure } from "allure-playwright";
+import logger from "@reporthelper/CustomLogger"
 
 export default class BaseActions {
 
@@ -16,24 +17,16 @@ export default class BaseActions {
   /**
  *
  * @param locator
- * @returns
- */
-  async getLocator(locator: Locator) {
-    return locator;
-  }
-
-  /**
- *
- * @param locator
  * @param options
  */
-  async focusToElement(locator: string, options?: { focus?: boolean; timeout?: number }) {
+  async focusToElement(locator: string | Locator, options?: { focus?: boolean; timeout?: number }) {
     try {
+      const updatedLocator = typeof locator === "string" ? this.page.locator(locator) : locator;
       if (options?.focus) {
-        await this.page.focus(locator);
+        await updatedLocator.focus();
       } else if (!options?.focus && options?.timeout) {
         const timeout = options?.timeout;
-        await this.page.locator(locator).scrollIntoViewIfNeeded({ timeout });
+        await updatedLocator.scrollIntoViewIfNeeded({ timeout });
       }
     } catch (error) {
       console.error("Error Occured in focus Into view of needed");
@@ -51,40 +44,44 @@ export default class BaseActions {
       hasText?: string;
     }
   ) {
-    if (options?.tabId) {
-      let tabNumber = options.tabId
-      this.page = this.page.context().pages()[tabNumber] as Page;
-    } else if (options?.tabTitle) {
-      const pages: Page[] = this.page.context().pages();
+    try {
+      if (options?.tabId) {
+        let tabNumber = options.tabId
+        this.page = this.page.context().pages()[tabNumber] as Page;
+      } else if (options?.tabTitle) {
+        const pages: Page[] = this.page.context().pages();
 
-      for (let count = 0; count < pages.length; count++) {
-        const updatedpage = pages[count] as Page
+        for (let count = 0; count < pages.length; count++) {
+          const updatedpage = pages[count] as Page
+          const pageTitle = updatedpage.title();
+          if (options.tabTitle === pageTitle) {
+            this.page = this.page.context().pages()[count] as Page;
+            break;
+          }
+        }
+      } else if (options?.tabTitle && options?.tabId) {
+        const pages: Page[] = this.page.context().pages();
+        const updatedpage = pages[options.tabId] as Page
         const pageTitle = updatedpage.title();
         if (options.tabTitle === pageTitle) {
-          this.page = this.page.context().pages()[count] as Page;
-          break;
+          this.page = this.page.context().pages()[options.tabId] as Page;
         }
       }
-    } else if (options?.tabTitle && options?.tabId) {
-      const pages: Page[] = this.page.context().pages();
-      const updatedpage = pages[options.tabId] as Page
-      const pageTitle = updatedpage.title();
-      if (options.tabTitle === pageTitle) {
-        this.page = this.page.context().pages()[options.tabId] as Page;
-      }
-    }
 
-    if (options?.frame) {
-      return this.page.frameLocator(options.frame).locator(locator, {
+      if (options?.frame) {
+        return this.page.frameLocator(options.frame).locator(locator, {
+          has: options?.has,
+          hasText: options?.hasText,
+        });
+      }
+
+      return this.page.locator(locator, {
         has: options?.has,
         hasText: options?.hasText,
       });
     }
-
-    return this.page.locator(locator, {
-      has: options?.has,
-      hasText: options?.hasText,
-    });
+    catch (error) {
+    }
   }
 
 
@@ -112,8 +109,8 @@ export default class BaseActions {
       : await locator.count();
   }
 
-  async allure_attach(description: string, element_type: string, contentType: string) {
-    await allure.attachment(description, JSON.stringify(element_type), { contentType: contentType });
+  async allure_attach(description: string, element_type?: string, contentType?: string) {
+    await allure.attachment(description, JSON.stringify(element_type), { contentType: contentType as string });
   }
 
   async test_attach(description: string, contentType: string) {

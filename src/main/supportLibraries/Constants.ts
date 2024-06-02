@@ -25,11 +25,9 @@ export const CommonConstants = {
   PARALLEL_MODE: "parallel",
   SERIAL_MODE: "serial",
   REPORT_TITLE: "Test Execution Report",
-  //TODO: Always set "reports" instead of test-results
-  RESULTS_PATH: "./test-results/results",
-  // Results Path should be attached with results.xml --> RESULTS_PATH + "/results.xml"
-  //JUNIT_RESULTS_PATH : "./test-results/results/results.xml"
-  JUNIT_RESULTS_PATH: () => `${CommonConstants.RESULTS_PATH}/results.xml`,
+  RESULTS_PATH: "./test-results",
+  JSON_RESULTS_PATH: () => `${CommonConstants.RESULTS_PATH}/json-report/results.json`,
+  JUNIT_RESULTS_PATH: () => `${CommonConstants.RESULTS_PATH}/junit-report/results.xml`,
 };
 
 export const DBConstants = {
