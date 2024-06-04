@@ -1,6 +1,6 @@
-import * as Constants from '@utils/Constants'
+import * as Constants from '@data/Constants';
 import path from 'path';
-import fs from 'fs'
+import fs from 'fs';
 
 export default class Allocator {
     public static createSuite() {

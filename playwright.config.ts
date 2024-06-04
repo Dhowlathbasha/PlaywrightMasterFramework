@@ -1,31 +1,29 @@
-import { defineConfig, devices } from "@playwright/test";
-import * as dotenv from "dotenv";
-import { defineBddConfig } from "playwright-bdd";
-import * as os from "os";
-import * as BrowserConfig from "./src/main/configs/BrowserConfig";
-import * as Constants from "./src/main/supportLibraries/Constants"
+import { defineConfig, devices } from '@playwright/test';
+import * as dotenv from 'dotenv';
+import { defineBddConfig } from 'playwright-bdd';
+import * as os from 'os';
+import * as BrowserConfig from './main/configs/BrowserConfig';
+import * as Constants from '@data/Constants';
 
 const waitTimeInMin: number = 60 * 1000;
 
 dotenv.config({
-  path: `./src/test/resource/environments/${process.env.NODE_ENV ? process.env.NODE_ENV : "qa"
-    }.env`,
+  path: `./resource/environments/${process.env.NODE_ENV ? process.env.NODE_ENV : 'qa'}.env`,
 });
 
 const testDir = defineBddConfig({
-  paths: ["src/test/features/*.feature"],
-  require: ["src/main/steps/*.ts"],
-  importTestFrom: "src/main/configs/fixtures/bddPageFixture.ts",
+  paths: ['tests/features/*.feature'],
+  require: ['main/steps/*.ts'],
+  importTestFrom: 'main/configs/fixtures/bddPageFixture.ts',
   // ...other playwright-bdd options
 });
 
-let testName = process.env.TEST_NAME?.trim() as string;
-const testcase_Directory = process.env.TESTCASE_DIR as string;
+const testName = process.env.TEST_NAME?.trim() as string;
+const TESTCASE_DIR = process.env.TESTCASE_DIR as string;
 export default defineConfig({
-
   //testDir, // Uncomment this for Cucumber BDD execution
-  testDir: testcase_Directory, // Uncomment this for test runner execution
-  outputDir: "./test-results/artifacts", //Folder for test artifacts such as screenshots, videos, traces, etc.
+  testDir: TESTCASE_DIR, // Uncomment this for test runner execution
+  outputDir: './test-results/artifacts', //Folder for test artifacts such as screenshots, videos, traces, etc.
   use: {
     /**
      * While Playwright can download and use the recent Chromium build, it can operate against the branded Google Chrome
@@ -37,7 +35,7 @@ export default defineConfig({
     deviceScaleFactor: undefined,
     headless: false,
     launchOptions: {
-      args: ["--start-maximized", "--disable-extensions", "--disable-plugins"],
+      args: ['--start-maximized', '--disable-extensions', '--disable-plugins'],
       headless: false,
       timeout: Number.parseInt(process.env.BROWSER_LAUNCH_TIMEOUT as string, 10),
       slowMo: 0,
@@ -48,11 +46,11 @@ export default defineConfig({
     acceptDownloads: true,
     ignoreHTTPSErrors: true,
     navigationTimeout: Number.parseInt(process.env.NAVIGATION_TIMEOUT as string, 10) * waitTimeInMin,
-    trace: "on-first-retry",
-    video: "retain-on-failure",
+    trace: 'on-first-retry',
+    video: 'retain-on-failure',
     viewport: null,
     screenshot: {
-      mode: "only-on-failure",
+      mode: 'on',
       fullPage: true,
     },
   },
@@ -75,39 +73,49 @@ export default defineConfig({
           os_version: os.version(),
           node_version: process.version,
         },
-        outputFolder: "./test-results/allure-results",
+        outputFolder: './test-results/allure-results',
         detail: true,
-        open: "on-failure",
+        open: 'on-failure',
       },
     ],
-    [`html`, { outputFolder: "./test-results/html-report", open: "never" }],
-    ["junit", { embedAnnotationsAsProperties: true, embedAttachmentsAsProperty: 'testrun_evidence', outputFile: Constants.CommonConstants.JUNIT_RESULTS_PATH()}],
-    ["json", { outputFile: Constants.CommonConstants.JSON_RESULTS_PATH()}],
+    [`html`, { outputFolder: './test-results/html-report', open: 'never' }],
     [
-      "monocart-reporter",
+      'junit',
       {
-        name: "Automation Report",
-        outputFile: "./test-results/report/execution.html",
+        embedAnnotationsAsProperties: true,
+        embedAttachmentsAsProperty: 'testrun_evidence',
+        outputFile: Constants.CommonConstants.JUNIT_RESULTS_PATH(),
       },
-    ]]
-  ,
+    ],
+    ['json', { outputFile: Constants.CommonConstants.JSON_RESULTS_PATH() }],
+    [
+      'monocart-reporter',
+      {
+        name: 'Automation Report',
+        outputFile: './test-results/report/execution.html',
+      },
+    ],
+  ],
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : undefined,
   workers: process.env.CI ? Number.parseInt(process.env.PARALLEL_THREAD as string, 10) : undefined,
-  preserveOutput: "failures-only",
+  preserveOutput: 'failures-only',
   timeout: Number.parseInt(process.env.TEST_TIMEOUT as string, 10) * waitTimeInMin,
+  expect: {
+    timeout: Number.parseInt(process.env.TEST_TIMEOUT as string, 10) * waitTimeInMin,
+  },
 
   projects: [
     {
-      name: "chromium",
+      name: 'chromium',
       use: {
-        ...devices["Desktop Chrome"],
+        ...devices['Desktop Chrome'],
       },
     },
     {
-      name: "firefox",
+      name: 'firefox',
       use: {
-        ...devices["Desktop Firefox"],
+        ...devices['Desktop Firefox'],
       },
     },
     // {
