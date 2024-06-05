@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Page } from '@playwright/test';
 import RequestHeader from '@utils/apiLib/RequestHeader';
 import RESTRequest from '@utils/apiLib/RestRequestActions';

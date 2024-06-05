@@ -30,10 +30,12 @@ export default class DBUtil {
    */
   public static async executeOracleQuery(dbConfig: string, query: string) {
     const configs = dbConfig.split(Constants.CommonConstants.SEMICOLON);
+    //Array Destructuring
+    const [user, password, connectString] = configs;
     const config = {
-      user: configs[0].replace(Constants.DBConstants.USER, Constants.CommonConstants.BLANK).trim(),
-      password: configs[1].replace(Constants.DBConstants.PASSWORD, Constants.CommonConstants.BLANK).trim(),
-      connectString: configs[2]
+      user: user!.replace(Constants.DBConstants.USER, Constants.CommonConstants.BLANK).trim(),
+      password: password!.replace(Constants.DBConstants.PASSWORD, Constants.CommonConstants.BLANK).trim(),
+      connectString: connectString!
         .replace(Constants.DBConstants.CONNECTION_STRING, Constants.CommonConstants.BLANK)
         .trim(),
     };

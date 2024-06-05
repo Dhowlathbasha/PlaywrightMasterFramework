@@ -2,7 +2,7 @@
 import test from '@playwright/test';
 import soapRequest from 'easy-soap-request';
 import fs from 'fs';
-import SOAPResponse from './SoapResponse';
+import SOAPResponse from './SoapResponseActions';
 import StringUtil from '@utils/StringOps';
 import * as Constants from '@data/Constants';
 

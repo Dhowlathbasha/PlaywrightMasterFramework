@@ -226,27 +226,24 @@
     },
     {
       "files": [
-        "main/util/**/*.ts"
+        "main/supportLibraries/**/*.ts"
       ],
-      "excludedFiles": ["main/util/**/index.ts"],
+      "excludedFiles": ["main/supportLibraries/**/index.ts"],
       "rules": {
-        "filenames/match-regex": [
-          "error",
-          "\\.util$",
-          true
-        ]
       }
     },
     {
       "files": [
-        "tests/*.ts"
+        "tests/scriptLibrary/**/*.ts"
       ],
       "rules": {
-        "filenames/match-regex": [
-          "error",
-          "\\.test$",
-          true
-        ]
+      }
+    },
+    {
+      "files": [
+        "tests/features/*.feature"
+      ],
+      "rules": {
       }
     }
   ]

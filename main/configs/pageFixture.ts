@@ -1,19 +1,20 @@
-import { test as baseTest, TestInfo, Page } from '@playwright/test';
+/* eslint-disable no-use-before-define */
+import { test as baseTest } from '@playwright/test';
 import SupportUtils from '@utils/SupportUtils';
 import PlaywrightActions from '@utils/PlaywrightActions';
 import ExcelActions from '@utils/ExcelActions';
 import AxeBuilder from '@axe-core/playwright';
-import BoilerHomePage from 'src/main/pages/BoilerHomepage';
-import AmazonHomePage from 'src/main/pages/AmazonHomePage';
+import BoilerHomePage from '@pages/BoilerHomepage';
+import AmazonHomePage from '@pages/AmazonHomePage';
 
-type pages = {
+interface pages {
   actions: PlaywrightActions;
   amazonHomePage: AmazonHomePage;
   boilerHomePage: BoilerHomePage;
   supportUtils: SupportUtils;
   excelActions: ExcelActions;
   axebuilder: AxeBuilder;
-};
+}
 
 const testPages = baseTest.extend<pages>({
   actions: async ({ page }, use) => {
@@ -39,5 +40,8 @@ const testPages = baseTest.extend<pages>({
   },
 });
 
-export const test = testPages;
-export const expect = testPages.expect;
+const test = testPages;
+const testInfo = test.info();
+const { expect } = testPages;
+
+export { test, testInfo, expect };

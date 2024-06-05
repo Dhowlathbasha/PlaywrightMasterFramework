@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
-import { defineBddConfig } from 'playwright-bdd';
+//import { defineBddConfig } from 'playwright-bdd';
 import * as os from 'os';
 import * as BrowserConfig from './main/configs/BrowserConfig';
 import * as Constants from '@data/Constants';
@@ -11,14 +11,14 @@ dotenv.config({
   path: `./resource/environments/${process.env.NODE_ENV ? process.env.NODE_ENV : 'qa'}.env`,
 });
 
-const testDir = defineBddConfig({
-  paths: ['tests/features/*.feature'],
-  require: ['main/steps/*.ts'],
-  importTestFrom: 'main/configs/fixtures/bddPageFixture.ts',
-  // ...other playwright-bdd options
-});
+// const testDir = defineBddConfig({
+//   paths: ['tests/features/*.feature'],
+//   require: ['main/steps/*.ts'],
+//   importTestFrom: 'main/configs/fixtures/bddPageFixture.ts',
+//   // ...other playwright-bdd options
+// });
 
-const testName = process.env.TEST_NAME?.trim() as string;
+//const testName = process.env.TEST_NAME?.trim() as string;
 const TESTCASE_DIR = process.env.TESTCASE_DIR as string;
 export default defineConfig({
   //testDir, // Uncomment this for Cucumber BDD execution
@@ -60,7 +60,7 @@ export default defineConfig({
     ['line'],
     //['list', { printSteps: true }],
     //['blob', { outputDir: './test-results/blob-report', fileName: `report-${os.platform()}.zip` }]
-    [`./src/main/reportUtils/ReportHelper.ts`] /* Custom report format with logs */,
+    [`./main/supportLibraries/reportUtils/ReportHelper.ts`] /* Custom report format with logs */,
 
     /* Allure report configuration */
     [

@@ -1,5 +1,6 @@
-import randomString from "randomstring";
-import format from "string-format";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import randomString from 'randomstring';
+import format from 'string-format';
 
 export default class StringOps {
   /**
@@ -9,10 +10,12 @@ export default class StringOps {
    * @returns str
    */
   public static formatString(str: string, ...replaceValue: string[]): string {
-    for (let i = 0; i < replaceValue.length; i++) {
-      str = str.split(`{${i}}`).join(replaceValue[i]);
+    let strValue: string = '';
+    for (let index = 0; index < replaceValue.length; index++) {
+      strValue = str.split(`{${index}}`).join(replaceValue[index]);
     }
-    return str;
+
+    return strValue;
   }
 
   /**
@@ -22,10 +25,12 @@ export default class StringOps {
    * @returns str
    */
   public static formatStringValue(str: string, replaceValue: any): string {
+    let strValue: string = '';
     for (const [key, value] of Object.entries(replaceValue)) {
-      str = str.split(`{${key}}`).join(`${value}`);
+      strValue = str.split(`{${key}}`).join(`${value}`);
     }
-    return str;
+
+    return strValue;
   }
 
   /**
@@ -33,20 +38,21 @@ export default class StringOps {
    * @param str Original string
    * @param searchValue searches for and replace matches within the string.
    * @param replaceValue A string containing the text to replace for every successful match of searchValue in this string.
-   * @returns 
+   * @returns
    */
   public static replaceAll(str: string, searchValue: string, replaceValue: string): string {
     const replacer = new RegExp(searchValue, 'g');
     const replacedStr = str.replace(replacer, replaceValue);
+
     return replacedStr;
   }
 
   /**
    * replaces the regex with string value
-   * @param str 
-   * @param regex 
-   * @param value 
-   * @returns 
+   * @param str
+   * @param regex
+   * @param value
+   * @returns
    */
   public static getRegXLocator(str: string, regex: RegExp, value: string) {
     return str.replace(regex, value);
@@ -54,11 +60,12 @@ export default class StringOps {
 
   /**
    * Generates random alphanumeric string of given length
-   * @param length 
-   * @returns 
+   * @param length
+   * @returns
    */
   public static randomAlphanumericString(length: number): string {
     const str = randomString.generate(length);
+
     return str;
   }
 
@@ -69,6 +76,7 @@ export default class StringOps {
    */
   public static randomAlphabeticString(length: number): string {
     const str = randomString.generate({ length: length, charset: 'alphabetic' });
+
     return str;
   }
 
@@ -78,7 +86,8 @@ export default class StringOps {
    * @returns
    */
   public static randomUppercaseString(length: number): string {
-    const str = randomString.generate({ length: length, charset: 'alphabetic', capitalization: "uppercase" });
+    const str = randomString.generate({ length: length, charset: 'alphabetic', capitalization: 'uppercase' });
+
     return str;
   }
 
@@ -88,7 +97,8 @@ export default class StringOps {
    * @returns
    */
   public static randomLowercaseString(length: number): string {
-    const str = randomString.generate({ length: length, charset: 'alphabetic', capitalization: "lowercase" });
+    const str = randomString.generate({ length: length, charset: 'alphabetic', capitalization: 'lowercase' });
+
     return str;
   }
 
@@ -99,14 +109,15 @@ export default class StringOps {
    */
   public static randomNumberString(length: number): string {
     const str = randomString.generate({ length: length, charset: 'numeric' });
+
     return str;
   }
 
   /**
    * This method will return the formatted String by replacing value in {key} from Object
-   * @param str 
-   * @param obj 
-   * @returns 
+   * @param str
+   * @param obj
+   * @returns
    */
   public static formatStringFromObject(str: string, obj: any): string {
     return format(str, obj);

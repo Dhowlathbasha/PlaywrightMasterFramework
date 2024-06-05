@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Worksheet } from 'exceljs';
 import { Workbook } from 'exceljs';
 import type { Page, TestInfo } from '@playwright/test';
@@ -15,17 +16,17 @@ export default class ExcelActions {
     this.testInfo = testInfo;
   }
 
-  async getData(filepath_W_name: string, sheetName: string, tcid: string, columnName: string) {
+  async getData(filepathWithName: string, sheetName: string, tcid: string, columnName: string) {
     const workbook = new Workbook();
     let colNum: any;
 
-    const content_workbook = await workbook.xlsx.readFile(filepath_W_name);
-    const worksheet: any;
+    const content_workbook = await workbook.xlsx.readFile(filepathWithName);
+    let worksheet: any = '';
     worksheet = content_workbook.getWorksheet(sheetName);
     if (worksheet !== undefined) {
       const rows = worksheet.rowCount;
 
-      if ((await this.getColumnNumber(worksheet, columnName)) != undefined) {
+      if ((await this.getColumnNumber(worksheet, columnName)) !== undefined) {
         colNum = await this.getColumnNumber(worksheet, columnName);
 
         return await this.getColumnData(worksheet, tcid, rows, colNum);
@@ -36,9 +37,9 @@ export default class ExcelActions {
   async getColumnNumber(worksheet: Worksheet, columnName: string): Promise<any> {
     let colNum: any;
     try {
-      for (let i = 1; i <= worksheet.columnCount; i++) {
-        if (worksheet.getRow(1).getCell(i).value === columnName) {
-          colNum = i;
+      for (let index = 1; index <= worksheet.columnCount; index++) {
+        if (worksheet.getRow(1).getCell(index).value === columnName) {
+          colNum = index;
           break;
         }
       }
@@ -51,9 +52,9 @@ export default class ExcelActions {
 
   async getColumnData(worksheet: Worksheet, tcid: string, rowNum: number, columnNum: string | number) {
     let columnData: any;
-    for (let i = 2; i <= rowNum; i++) {
-      if (worksheet.getRow(i).getCell(1).value === tcid) {
-        columnData = worksheet.getRow(i).getCell(columnNum).value;
+    for (let index = 2; index <= rowNum; index++) {
+      if (worksheet.getRow(index).getCell(1).value === tcid) {
+        columnData = worksheet.getRow(index).getCell(columnNum).value;
 
         return columnData;
       }

@@ -224,7 +224,7 @@ export default class ElementActions extends BaseActions {
     const locator = await this.fetchLocatorfromJson(filePath, locatorName);
     const actualValue = await this.page.inputValue(locator.locators[0]);
     const description: string =
-      strExpectedValue == actualValue
+      strExpectedValue === actualValue
         ? `${locator.description} value is displayed as expected = ${strExpectedValue} ; actual = ${actualValue}`
         : `FAILURE - ${locator.description} value is NOT displayed as expected = ${strExpectedValue} ; actual = ${actualValue}`;
     await this.embedScreenshot(description);
@@ -236,7 +236,7 @@ export default class ElementActions extends BaseActions {
   async verifyDisabled(filePath: string, locatorName: string) {
     const locator = await this.fetchLocatorfromJson(filePath, locatorName);
     const flagBoolean = await this.page.isEditable(locator.locators[0]);
-    const description: string = !flagBoolean
+    const description: string = flagBoolean
       ? `${locator.description} is Disabled as Expected`
       : `${locator.description} is NOT Disabled - FAILURE`;
     await this.embedScreenshot(description);

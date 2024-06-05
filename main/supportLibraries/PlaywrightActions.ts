@@ -1,17 +1,22 @@
-import AxeBuilder from "@axe-core/playwright";
-import { Locator, Page, expect, test, TestInfo } from "@playwright/test";
-import * as fs from "fs";
-import * as pdfjslib from "pdfjs-dist-es5";
-import * as Constants from "../supportLibraries/Constants";
-import BrowserActions from "./Actions/BrowserActions";
+/* eslint-disable playwright/no-networkidle */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import AxeBuilder from '@axe-core/playwright';
+import type { Locator, Page, TestInfo } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import * as fs from 'fs';
+import * as pdfjslib from 'pdfjs-dist-es5';
+import * as Constants from '@data/Constants';
+import BrowserActions from './Actions/BrowserActions';
 
 export default class PlaywrightActions extends BrowserActions {
-
   /**
    * @param {import('@playwright/test').Page} page
    * @param {import('@playwright/test').TestInfo} testInfo
    */
-  constructor(public page: Page, public testInfo: TestInfo) {
+  constructor(
+    public page: Page,
+    public testInfo: TestInfo
+  ) {
     super(page, testInfo);
     this.page = page;
     this.testInfo = testInfo;
@@ -20,9 +25,8 @@ export default class PlaywrightActions extends BrowserActions {
   async getPdfPageText(pdf: any, pageNo: number) {
     const page = await pdf.getPage(pageNo);
     const tokenizedText = await page.getTextContent();
-    const pageText = tokenizedText.items
-      .map((token: any) => token.str)
-      .join("");
+    const pageText = tokenizedText.items.map((token: any) => token.str).join('');
+
     return pageText;
   }
 
@@ -35,9 +39,9 @@ export default class PlaywrightActions extends BrowserActions {
       pageTextPromises.push(this.getPdfPageText(pdf, pageNo));
     }
     const pageTexts = await Promise.all(pageTextPromises);
-    return pageTexts.join(" ");
-  }
 
+    return pageTexts.join(' ');
+  }
 
   /**
    * Downloads the file and returns the downloaded file name
@@ -49,31 +53,32 @@ export default class PlaywrightActions extends BrowserActions {
     let fileName!: string;
     await test.step(`Downloading ${description} file`, async () => {
       const [download] = await Promise.all([
-        this.page.waitForEvent("download"),
-        await this.page.locator(selector).click({ modifiers: ["Alt"] }),
+        this.page.waitForEvent('download'),
+        await this.page.locator(selector).click({ modifiers: ['Alt'] }),
       ]);
       fileName = download.suggestedFilename();
       const filePath = `${Constants.CommonConstants.DOWNLOAD_PATH}${fileName}`;
       await download.saveAs(filePath);
       await download.delete();
     });
+
     return fileName;
   }
 
   //************************  Wait operations  ************************
 
   /**
- * Returns when the required dom content is in loaded state.
- */
+   * Returns when the required dom content is in loaded state.
+   */
   async waitForDomLoad() {
-    await this.page.waitForLoadState("domcontentloaded", { timeout: 5000 });
+    await this.page.waitForLoadState('domcontentloaded', { timeout: 5000 });
   }
 
   /**
    * Wait for Page to complete the state of networkIdle
    */
   async waitForNetworkIdle() {
-    await this.page.waitForLoadState("networkidle");
+    await this.page.waitForLoadState('networkidle');
   }
 
   /**
@@ -89,7 +94,8 @@ export default class PlaywrightActions extends BrowserActions {
    * @returns
    */
   async waitTillElementDisappear(locator: string) {
-    await this.page.locator(locator).waitFor({ state: "hidden" });
+    await this.page.locator(locator).waitFor({ state: 'hidden' });
+
     return this;
   }
 
@@ -99,9 +105,8 @@ export default class PlaywrightActions extends BrowserActions {
    * @returns
    */
   async waitTillVisible(locator: string, sec: number) {
-    await this.page
-      .locator(locator)
-      .waitFor({ state: "visible", timeout: sec * 1000 });
+    await this.page.locator(locator).waitFor({ state: 'visible', timeout: sec * 1000 });
+
     return this;
   }
 
@@ -110,7 +115,8 @@ export default class PlaywrightActions extends BrowserActions {
    * @returns
    */
   async waitTillDetachedFromDom(locator: string) {
-    await this.page.locator(locator).waitFor({ state: "detached" });
+    await this.page.locator(locator).waitFor({ state: 'detached' });
+
     return this;
   }
 
@@ -119,44 +125,41 @@ export default class PlaywrightActions extends BrowserActions {
    * @returns
    */
   async waitForPresent(locator: string) {
-    await this.page.locator(locator).waitFor({ state: "attached" });
+    await this.page.locator(locator).waitFor({ state: 'attached' });
+
     return this;
   }
 
   //************************    visual validation   ************************
 
-  async verifySnapshot_byLoc(locator: Locator) {
+  async verifySnapshotByLoc(locator: Locator) {
     await expect(locator).toHaveScreenshot();
     const screenshot = await locator.screenshot();
-    await this.testInfo.attach("ACTUAL SCREENSHOT - Visual Validation", {
+    await this.testInfo.attach('ACTUAL SCREENSHOT - Visual Validation', {
       body: screenshot,
-      contentType: "image/png",
+      contentType: 'image/png',
     });
   }
 
   async verifySnapshot(filePath: string, locatorName: string, screenshotPath: string) {
-    let locator = await this.fetchLocatorfromJson(filePath, locatorName);
-    await expect
-      .soft(this.page.locator(locator.locators[0]))
-      .toHaveScreenshot(screenshotPath);
-    const screenshot = await this.page
-      .locator(locator.locators[0])
-      .screenshot();
-    await this.testInfo.attach("ACTUAL SCREENSHOT - Visual Validation", {
+    const locator = await this.fetchLocatorfromJson(filePath, locatorName);
+    await expect.soft(this.page.locator(locator.locators[0])).toHaveScreenshot(screenshotPath);
+    const screenshot = await this.page.locator(locator.locators[0]).screenshot();
+    await this.testInfo.attach('ACTUAL SCREENSHOT - Visual Validation', {
       body: screenshot,
-      contentType: "image/png",
+      contentType: 'image/png',
     });
   }
 
   //************************    accessibility   ************************
 
   async validateAccessibility(strDescription: string) {
-    const page = this.page;
+    const { page } = this;
     const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
 
-    await this.testInfo.attach("accessibility-scan-results-" + strDescription, {
+    await this.testInfo.attach(`accessibility-scan-results-${strDescription}`, {
       body: JSON.stringify(accessibilityScanResults, null, 2),
-      contentType: "application/json",
+      contentType: 'application/json',
     });
 
     expect(accessibilityScanResults.violations).toEqual([]);

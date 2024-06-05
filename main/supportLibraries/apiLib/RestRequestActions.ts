@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Page, APIResponse } from '@playwright/test';
 import { test } from '@playwright/test';
 import fs from 'fs';
 import fetchToCurl from 'fetch-to-curl';
 import * as Constants from '@data/Constants';
 import StringOps from '@utils/StringOps';
-import RESTResponse from '@utils/apiLib/RestResponse';
+import RESTResponse from '@utils/apiLib/RestResponseActions';
 
-export default class RESTRequest {
+export default class RESTRequestActions {
   constructor(private page: Page) {
     this.page = page;
   }
@@ -51,21 +52,7 @@ export default class RESTRequest {
 
     return restResponse;
   }
-  /**
-   * Sets the API Response into RestResponse object
-   * @param response
-   * @param description
-   * @returns RestResponse object
-   */
-  private async setRestResponse(response: APIResponse, description: string): Promise<RESTResponse> {
-    const body = await response.text();
-    const headers = response.headers();
-    const statusCode = response.status();
-    const restResponse: RESTResponse = new RESTResponse(headers, body, statusCode, description);
-    console.log(`Response body: ${JSON.stringify(JSON.parse(body), undefined, 2)}`);
 
-    return restResponse;
-  }
   /**
    * Make Get request and return response
    * @param endPoint
@@ -84,6 +71,7 @@ export default class RESTRequest {
 
     return restResponse;
   }
+
   /**
    * Make Put request and return response
    * @param endPoint
@@ -179,5 +167,21 @@ export default class RESTRequest {
         method: method,
       })
     );
+  }
+
+  /**
+   * Sets the API Response into RestResponse object
+   * @param response
+   * @param description
+   * @returns RestResponse object
+   */
+  private async setRestResponse(response: APIResponse, description: string): Promise<RESTResponse> {
+    const body = await response.text();
+    const headers = response.headers();
+    const statusCode = response.status();
+    const restResponse: RESTResponse = new RESTResponse(headers, body, statusCode, description);
+    console.log(`Response body: ${JSON.stringify(JSON.parse(body), undefined, 2)}`);
+
+    return restResponse;
   }
 }

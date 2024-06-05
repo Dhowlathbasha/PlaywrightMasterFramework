@@ -1,3 +1,1 @@
-export default class PDFUtils{
-
-}
+export default class PDFUtils {}
