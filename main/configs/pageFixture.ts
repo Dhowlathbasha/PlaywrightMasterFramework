@@ -6,6 +6,7 @@ import ExcelActions from '@utils/ExcelActions';
 import AxeBuilder from '@axe-core/playwright';
 import BoilerHomePage from '@pages/BoilerHomepage';
 import AmazonHomePage from '@pages/AmazonHomePage';
+import CsvFileActions from '@utils/CsvFileActions';
 
 interface pages {
   actions: PlaywrightActions;
@@ -13,6 +14,7 @@ interface pages {
   boilerHomePage: BoilerHomePage;
   supportUtils: SupportUtils;
   excelActions: ExcelActions;
+  csvActions: CsvFileActions;
   axebuilder: AxeBuilder;
 }
 
@@ -31,7 +33,11 @@ const testPages = baseTest.extend<pages>({
   },
 
   excelActions: async ({ page }, use) => {
-    await use(new ExcelActions(page, test.info()));
+    await use(new ExcelActions());
+  },
+
+  csvActions: async ({ page }, use) => {
+    await use(new CsvFileActions());
   },
 
   axebuilder: async ({ page }, use) => {

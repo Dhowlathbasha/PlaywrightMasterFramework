@@ -86,6 +86,9 @@
     "typescript": "^5.4.5",
     "winston": "^3.13.0",
     "xml-formatter": "^3.6.2",
-    "xpath": "0.0.34"
+    "xpath": "0.0.34",
+    "csv-parse": "^5.5.6"
+  },
+  "dependencies": {
   }
 }

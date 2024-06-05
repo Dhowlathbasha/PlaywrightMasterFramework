@@ -26,6 +26,7 @@ export const CommonConstants = {
   SERIAL_MODE: 'serial',
   REPORT_TITLE: 'Test Execution Report',
   RESULTS_PATH: './test-results',
+  DATAFOLDER_PATH: './data',
   JSON_RESULTS_PATH: () => `${CommonConstants.RESULTS_PATH}/json-report/results.json`,
   JUNIT_RESULTS_PATH: () => `${CommonConstants.RESULTS_PATH}/junit-report/results.xml`,
 };

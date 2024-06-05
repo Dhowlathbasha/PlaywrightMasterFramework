@@ -1,21 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Worksheet } from 'exceljs';
 import { Workbook } from 'exceljs';
-import type { Page, TestInfo } from '@playwright/test';
 
 export default class ExcelActions {
-  /**
-   * @param {import('@playwright/test').Page} page
-   * @param {import('@playwright/test').TestInfo} testInfo
-   */
-  constructor(
-    public page: Page,
-    public testInfo: TestInfo
-  ) {
-    this.page = page;
-    this.testInfo = testInfo;
-  }
-
   async getData(filepathWithName: string, sheetName: string, tcid: string, columnName: string) {
     const workbook = new Workbook();
     let colNum: any;

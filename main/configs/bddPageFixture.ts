@@ -30,7 +30,7 @@ const testPages = baseTest.extend<pages>({
     await use(new SupportUtils(page, test.info()));
   },
   excelActions: async ({ page }, use) => {
-    await use(new ExcelActions(page, test.info()));
+    await use(new ExcelActions());
   },
   axebuilder: async ({ page }, use) => {
     const builder = new AxeBuilder({ page });
