@@ -52,7 +52,7 @@ export default class CsvFileActions {
   }
 
   public getHeaders(worksheet: Excel.Worksheet, index: number) {
-    const result = [];
+    const result: string[] = [];
 
     const row = worksheet.getRow(index);
 

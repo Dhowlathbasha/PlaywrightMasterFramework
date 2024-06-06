@@ -1,4 +1,4 @@
-export const BrowserConstants = {
+const BrowserConstants = {
   CHROME: 'chrome',
   FIREFOX: 'firefox',
   WEBKIT: 'webkit',
@@ -8,7 +8,7 @@ export const BrowserConstants = {
   BLANK: '',
 };
 
-export const CommonConstants = {
+const CommonConstants = {
   SEMICOLON: ';',
   BLANK: '',
   ZERO: 0,
@@ -31,10 +31,12 @@ export const CommonConstants = {
   JUNIT_RESULTS_PATH: () => `${CommonConstants.RESULTS_PATH}/junit-report/results.xml`,
 };
 
-export const DBConstants = {
+const DBConstants = {
   PROTOCOL: ';PROTOCOL=TCPIP',
   CERTIFICATE: ';trustServerCertificate=true;encrypt=false',
   USER: 'user:',
   PASSWORD: 'password:',
   CONNECTION_STRING: 'connectString:',
 };
+
+export { BrowserConstants, CommonConstants, DBConstants };

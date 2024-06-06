@@ -22,21 +22,16 @@ const testPages = baseTest.extend<pages>({
   actions: async ({ page }, use) => {
     await use(new PlaywrightActions(page, test.info()));
   },
-  amazonHomePage: async ({ page }, use) => {
-    await use(new AmazonHomePage(page, test.info()));
-  },
-  boilerHomePage: async ({ page }, use) => {
-    await use(new BoilerHomePage(page, test.info()));
-  },
+
   supportUtils: async ({ page }, use) => {
     await use(new SupportUtils(page, test.info()));
   },
 
-  excelActions: async ({ page }, use) => {
+  excelActions: async ({}, use) => {
     await use(new ExcelActions());
   },
 
-  csvActions: async ({ page }, use) => {
+  csvActions: async ({}, use) => {
     await use(new CsvFileActions());
   },
 
@@ -44,10 +39,17 @@ const testPages = baseTest.extend<pages>({
     const builder = new AxeBuilder({ page });
     await use(builder);
   },
+
+  amazonHomePage: async ({ page }, use) => {
+    await use(new AmazonHomePage(page, test.info()));
+  },
+
+  boilerHomePage: async ({ page }, use) => {
+    await use(new BoilerHomePage(page, test.info()));
+  },
 });
 
 const test = testPages;
-const testInfo = test.info();
 const { expect } = testPages;
 
-export { test, testInfo, expect };
+export { test, expect };
