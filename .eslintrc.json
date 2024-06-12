@@ -1,250 +1,250 @@
-{
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json",
-    "sourceType": "module"
-  },
-  "plugins": [
-    "@typescript-eslint",
-    "prettier",
-    "playwright",
-    "unicorn",
-    "filenames"
-  ],
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "plugin:playwright/recommended"
-  ],
-  "rules": {
-    "complexity": [
-      "error",
-      12
-    ],
-    "no-restricted-syntax": [
-      "error",
-      "AwaitExpression > AwaitExpression.argument"
-    ],
-    "max-params": [
-      "error",
-      5
-    ],
-    "no-promise-executor-return": "error",
-    "no-self-compare": "error",
-    "no-template-curly-in-string": "error",
-    "no-use-before-define": "error",
-    "arrow-body-style": [
-      "error",
-      "as-needed"
-    ],
-    "curly": [
-      "error",
-      "multi-line"
-    ],
-    "default-case": "error",
-    "default-case-last": "error",
-    "@typescript-eslint/array-type": "error",
-    "eqeqeq": [
-      "error",
-      "always"
-    ],
-    "guard-for-in": "error",
-    "id-length": "error",
-    "max-classes-per-file": [
-      "error",
-      1
-    ],
-    "max-depth": [
-      "error",
-      4
-    ],
-    "max-lines": [
-      "error",
-      800
-    ],
-    "max-lines-per-function": [
-      "error",
-      {
-        "max": 100,
-        "skipComments": true
-      }
-    ],
-    "max-nested-callbacks": [
-      "error",
-      3
-    ],
-    "no-array-constructor": "error",
-    "no-empty-function": "error",
-    "no-multi-assign": "error",
-    "no-nested-ternary": "error",
-    "no-new-wrappers": "error",
-    "no-param-reassign": "error",
-    "no-return-assign": "error",
-    "no-sequences": "error",
-    "no-unneeded-ternary": "error",
-    "no-unused-expressions": "error",
-    "no-useless-catch": "error",
-    "no-useless-computed-key": "error",
-    "no-useless-constructor": "error",
-    "no-useless-escape": "error",
-    "no-useless-rename": "error",
-    "no-useless-return": "error",
-    "no-var": "error",
-    "prefer-arrow-callback": "error",
-    "operator-assignment": [
-      "error",
-      "always"
-    ],
-    "prefer-const": "error",
-    "prefer-destructuring": "error",
-    "no-useless-concat": "error",
-    "prefer-template": "error",
-    "newline-before-return": "error",
-    "@typescript-eslint/consistent-type-definitions": "error",
-    "@typescript-eslint/consistent-type-exports": "error",
-    "@typescript-eslint/consistent-type-imports": "error",
-    "@typescript-eslint/member-ordering": "error",
-    "@typescript-eslint/method-signature-style": "error",
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "default",
-        "format": [
-          "camelCase",
-          "PascalCase",
-          "UPPER_CASE",
-          "snake_case"
-        ]
-      },
-      {
-        "selector": "variable",
-        "format": [
-          "camelCase",
-          "PascalCase",
-          "UPPER_CASE",
-          "snake_case"
-        ]
-      },
-      {
-        "selector": "parameter",
-        "format": [
-          "camelCase",
-          "PascalCase",
-          "UPPER_CASE",
-          "snake_case"
-        ]
-      },
-      {
-        "selector": "memberLike",
-        "modifiers": [
-          "private"
-        ],
-        "format": [
-          "camelCase",
-          "PascalCase",
-          "UPPER_CASE",
-          "snake_case"
-        ]
-      },
-      {
-        "selector": "typeLike",
-        "format": [
-          "camelCase",
-          "PascalCase",
-          "UPPER_CASE",
-          "snake_case"
-        ]
-      },
-      {
-        "selector": "import",
-        "format": [
-          "camelCase",
-          "PascalCase",
-          "UPPER_CASE",
-          "snake_case"
-        ]
-      }
-    ],
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
-    ],
-    "playwright/expect-expect": [
-      "off"
-    ],
-    "playwright/no-wait-for-timeout": "error",
-    "filenames/no-index": "off"
-  },
-  "overrides": [
-    {
-      "files": [
-        "main/pages/*.ts"
-      ],
-      "excludedFiles": ["main/pages/index.ts"],
-      "rules": {
-      }
-    },
-    {
-      "files": [
-        "data/*.ts"
-      ],
-      "excludedFiles": ["data/index.ts"],
-      "rules": {
-      }
-    },
-    {
-      "files": [
-        "main/configs/*.ts"
-      ],
-      "excludedFiles": ["main/configs/index.ts"],
-      "rules": {
-      }
-    },
-    {
-      "files": [
-        "main/steps/*.ts"
-      ],
-      "excludedFiles": ["main/steps/index.ts"],
-      "rules": {
-      }
-    },
-    {
-      "files": [
-        "main/supportLibraries/*.ts"
-      ],
-      "excludedFiles": ["main/supportLibraries/index.ts"],
-      "rules": {
-      }
-    },
-    {
-      "files": [
-        "main/supportLibraries/**/*.ts"
-      ],
-      "excludedFiles": ["main/supportLibraries/**/index.ts"],
-      "rules": {
-      }
-    },
-    {
-      "files": [
-        "tests/scriptLibrary/**/*.ts"
-      ],
-      "rules": {
-      }
-    },
-    {
-      "files": [
-        "tests/features/*.feature"
-      ],
-      "rules": {
-      }
-    }
-  ]
-}
+// {
+//   "parser": "@typescript-eslint/parser",
+//   "parserOptions": {
+//     "project": "./tsconfig.json",
+//     "sourceType": "module"
+//   },
+//   "plugins": [
+//     "@typescript-eslint",
+//     "prettier",
+//     "playwright",
+//     "unicorn",
+//     "filenames"
+//   ],
+//   "env": {
+//     "browser": true,
+//     "es6": true,
+//     "node": true
+//   },
+//   "extends": [
+//     "eslint:recommended",
+//     "plugin:@typescript-eslint/recommended",
+//     "plugin:prettier/recommended",
+//     "plugin:playwright/recommended"
+//   ],
+//   "rules": {
+//     "complexity": [
+//       "error",
+//       12
+//     ],
+//     "no-restricted-syntax": [
+//       "error",
+//       "AwaitExpression > AwaitExpression.argument"
+//     ],
+//     "max-params": [
+//       "error",
+//       5
+//     ],
+//     "no-promise-executor-return": "error",
+//     "no-self-compare": "error",
+//     "no-template-curly-in-string": "error",
+//     "no-use-before-define": "error",
+//     "arrow-body-style": [
+//       "error",
+//       "as-needed"
+//     ],
+//     "curly": [
+//       "error",
+//       "multi-line"
+//     ],
+//     "default-case": "error",
+//     "default-case-last": "error",
+//     "@typescript-eslint/array-type": "error",
+//     "eqeqeq": [
+//       "error",
+//       "always"
+//     ],
+//     "guard-for-in": "error",
+//     "id-length": "error",
+//     "max-classes-per-file": [
+//       "error",
+//       1
+//     ],
+//     "max-depth": [
+//       "error",
+//       4
+//     ],
+//     "max-lines": [
+//       "error",
+//       800
+//     ],
+//     "max-lines-per-function": [
+//       "error",
+//       {
+//         "max": 100,
+//         "skipComments": true
+//       }
+//     ],
+//     "max-nested-callbacks": [
+//       "error",
+//       3
+//     ],
+//     "no-array-constructor": "error",
+//     "no-empty-function": "error",
+//     "no-multi-assign": "error",
+//     "no-nested-ternary": "error",
+//     "no-new-wrappers": "error",
+//     "no-param-reassign": "error",
+//     "no-return-assign": "error",
+//     "no-sequences": "error",
+//     "no-unneeded-ternary": "error",
+//     "no-unused-expressions": "error",
+//     "no-useless-catch": "error",
+//     "no-useless-computed-key": "error",
+//     "no-useless-constructor": "error",
+//     "no-useless-escape": "error",
+//     "no-useless-rename": "error",
+//     "no-useless-return": "error",
+//     "no-var": "error",
+//     "prefer-arrow-callback": "error",
+//     "operator-assignment": [
+//       "error",
+//       "always"
+//     ],
+//     "prefer-const": "error",
+//     "prefer-destructuring": "error",
+//     "no-useless-concat": "error",
+//     "prefer-template": "error",
+//     "newline-before-return": "error",
+//     "@typescript-eslint/consistent-type-definitions": "error",
+//     "@typescript-eslint/consistent-type-exports": "error",
+//     "@typescript-eslint/consistent-type-imports": "error",
+//     "@typescript-eslint/member-ordering": "error",
+//     "@typescript-eslint/method-signature-style": "error",
+//     "@typescript-eslint/naming-convention": [
+//       "error",
+//       {
+//         "selector": "default",
+//         "format": [
+//           "camelCase",
+//           "PascalCase",
+//           "UPPER_CASE",
+//           "snake_case"
+//         ]
+//       },
+//       {
+//         "selector": "variable",
+//         "format": [
+//           "camelCase",
+//           "PascalCase",
+//           "UPPER_CASE",
+//           "snake_case"
+//         ]
+//       },
+//       {
+//         "selector": "parameter",
+//         "format": [
+//           "camelCase",
+//           "PascalCase",
+//           "UPPER_CASE",
+//           "snake_case"
+//         ]
+//       },
+//       {
+//         "selector": "memberLike",
+//         "modifiers": [
+//           "private"
+//         ],
+//         "format": [
+//           "camelCase",
+//           "PascalCase",
+//           "UPPER_CASE",
+//           "snake_case"
+//         ]
+//       },
+//       {
+//         "selector": "typeLike",
+//         "format": [
+//           "camelCase",
+//           "PascalCase",
+//           "UPPER_CASE",
+//           "snake_case"
+//         ]
+//       },
+//       {
+//         "selector": "import",
+//         "format": [
+//           "camelCase",
+//           "PascalCase",
+//           "UPPER_CASE",
+//           "snake_case"
+//         ]
+//       }
+//     ],
+//     "prettier/prettier": [
+//       "error",
+//       {
+//         "endOfLine": "auto"
+//       }
+//     ],
+//     "playwright/expect-expect": [
+//       "off"
+//     ],
+//     "playwright/no-wait-for-timeout": "error",
+//     "filenames/no-index": "off"
+//   },
+//   "overrides": [
+//     {
+//       "files": [
+//         "main/pages/*.ts"
+//       ],
+//       "excludedFiles": ["main/pages/index.ts"],
+//       "rules": {
+//       }
+//     },
+//     {
+//       "files": [
+//         "data/*.ts"
+//       ],
+//       "excludedFiles": ["data/index.ts"],
+//       "rules": {
+//       }
+//     },
+//     {
+//       "files": [
+//         "main/configs/*.ts"
+//       ],
+//       "excludedFiles": ["main/configs/index.ts"],
+//       "rules": {
+//       }
+//     },
+//     {
+//       "files": [
+//         "main/steps/*.ts"
+//       ],
+//       "excludedFiles": ["main/steps/index.ts"],
+//       "rules": {
+//       }
+//     },
+//     {
+//       "files": [
+//         "main/supportLibraries/*.ts"
+//       ],
+//       "excludedFiles": ["main/supportLibraries/index.ts"],
+//       "rules": {
+//       }
+//     },
+//     {
+//       "files": [
+//         "main/supportLibraries/**/*.ts"
+//       ],
+//       "excludedFiles": ["main/supportLibraries/**/index.ts"],
+//       "rules": {
+//       }
+//     },
+//     {
+//       "files": [
+//         "tests/scriptLibrary/**/*.ts"
+//       ],
+//       "rules": {
+//       }
+//     },
+//     {
+//       "files": [
+//         "tests/features/*.feature"
+//       ],
+//       "rules": {
+//       }
+//     }
+//   ]
+// }

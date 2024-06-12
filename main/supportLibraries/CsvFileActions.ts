@@ -2,6 +2,7 @@
 import * as Excel from 'exceljs';
 import * as fs from 'fs';
 import { parse } from 'csv-parse';
+import ccjson from 'convert-csv-to-json';
 import * as Constants from '@data/Constants';
 import path from 'path';
 
@@ -66,32 +67,29 @@ export default class CsvFileActions {
     return result;
   }
 
-  async getcsvjson(filepathWithName: string, sheetName: string) {
+  async getcsvjson(filepathWithName: string) {
     const updatedFilePath = path.resolve(Constants.CommonConstants.DATAFOLDER_PATH, filepathWithName);
-    const workbook = new Excel.Workbook();
+    const updatedJsonPath = path.resolve(Constants.CommonConstants.DATAFOLDER_PATH, 'testcase.json');
+    const fileContent = fs.readFileSync(updatedFilePath, { encoding: 'utf-8' });
 
-    const content_workbook = await workbook.csv.readFile(updatedFilePath, { sheetName: sheetName });
+    let json = ccjson.generateJsonFileFromCsv(updatedFilePath,updatedJsonPath);
 
-    const headers = this.getHeaders(content_workbook, 0);
+    console.log(json);
+    
+    
+    // const regex = /,(?=(?:[^"]*"[^"]*")*(?![^"]*"))/;
+    // const rows = fileContent.split('\n');
+    // const headers = rows[0]!.split(regex);
+    // const jsonData = [];
 
-    interface headers_arr {
-      headers: any;
-    }
-
-    const fileContent = fs.readFileSync(filepathWithName, { encoding: 'utf-8' });
-
-    parse(
-      fileContent,
-      {
-        delimiter: ',',
-        columns: headers,
-      },
-      (error, result: headers_arr[]) => {
-        if (error) {
-          console.error(error);
-        }
-        console.log('Result', result);
-      }
-    );
+    // for (let i = 1; i < rows.length; i++) {
+    //   const values = rows[i]!.split(regex);
+    //   const obj = {};
+    //   for (let j = 0; j < headers.length; j++) {
+    //     const header = headers[j as number]?.trim();
+    //     obj[header] = values[j]!.trim();
+    //   }
+    //   jsonData.push(obj);
+    // }
   }
 }

@@ -16,6 +16,8 @@ test.describe('Amazon', () => {
   test('in order A2', async ({ csvActions }) => {
     console.log('test A2 ', moment().format('DD-MMM-YYYY hh:mm:ss.SSS'));
     console.log(__dirname);
-    console.log(await csvActions.getData('dummycsv.csv', 'dummycsv', 'TC01_CreateAccountTest', 'TestID'));
+    //TestCaseID,Username,Password
+    console.log(await csvActions.getData('ui.csv', 'ui', 'TC1', 'TestCaseID'));
+    await csvActions.getcsvjson('ui.csv');
   });
 });
