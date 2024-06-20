@@ -1,0 +1,12 @@
+[
+    {
+        "TestCaseID": "TC1",
+        "Username": "Username1",
+        "Password": "Password1"
+    },
+    {
+        "TestCaseID": "TC2",
+        "Username": "Username2",
+        "Password": "Password2"
+    }
+]

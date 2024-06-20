@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import test from '@playwright/test';
-import soapRequest from 'easy-soap-request';
 import fs from 'fs';
 import SOAPResponse from './SoapResponseActions';
 import StringUtil from '@utils/StringOps';
 import * as Constants from '@data/Constants';
+import axios from 'axios';
 
 export default class SOAPRequest {
   format = require('xml-formatter');
@@ -28,13 +28,13 @@ export default class SOAPRequest {
   ): Promise<SOAPResponse> {
     let soapResponse!: SOAPResponse;
     await test.step(`Making post request for ${description}`, async () => {
-      const url = process.env.SOAP_API_BASE_URL + endPoint;
+      const url: string = process.env.SOAP_API_BASE_URL + endPoint;
       console.log(`URL: ${url}`);
       const xml = await this.createRequestBody(fileName, requestData);
-      const { response } = await soapRequest({ url: url, headers: requestHeader, xml: xml });
-      const { headers, body, statusCode } = response;
-      soapResponse = new SOAPResponse(headers, body, statusCode, description);
-      console.log(`SOAP Response: \n${this.format(body, { collapseContent: true })}`);
+      const response = await axios.post(url, xml, { headers: requestHeader });
+      const { headers, data, status } = response;
+      soapResponse = new SOAPResponse(headers, data, status, description);
+      console.log(`SOAP Response: \n${this.format(data, { collapseContent: true })}`);
     });
 
     return soapResponse;

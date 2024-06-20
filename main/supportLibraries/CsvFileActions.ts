@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Excel from 'exceljs';
 import * as fs from 'fs';
-import { parse } from 'csv-parse';
-import ccjson from 'convert-csv-to-json';
 import * as Constants from '@data/Constants';
 import path from 'path';
+import CSVToJSON from 'csvtojson';
 
 export default class CsvFileActions {
   async getData(filepathWithName: string, sheetName: string, tcid: string, columnName: string) {
@@ -70,26 +69,22 @@ export default class CsvFileActions {
   async getcsvjson(filepathWithName: string) {
     const updatedFilePath = path.resolve(Constants.CommonConstants.DATAFOLDER_PATH, filepathWithName);
     const updatedJsonPath = path.resolve(Constants.CommonConstants.DATAFOLDER_PATH, 'testcase.json');
-    const fileContent = fs.readFileSync(updatedFilePath, { encoding: 'utf-8' });
 
-    let json = ccjson.generateJsonFileFromCsv(updatedFilePath,updatedJsonPath);
+    try {
+      const users = await CSVToJSON().fromFile(updatedFilePath);
 
-    console.log(json);
-    
-    
-    // const regex = /,(?=(?:[^"]*"[^"]*")*(?![^"]*"))/;
-    // const rows = fileContent.split('\n');
-    // const headers = rows[0]!.split(regex);
-    // const jsonData = [];
+      console.log(JSON.stringify(users, null, 4));
+      // log the JSON array
+      console.log(users);
 
-    // for (let i = 1; i < rows.length; i++) {
-    //   const values = rows[i]!.split(regex);
-    //   const obj = {};
-    //   for (let j = 0; j < headers.length; j++) {
-    //     const header = headers[j as number]?.trim();
-    //     obj[header] = values[j]!.trim();
-    //   }
-    //   jsonData.push(obj);
-    // }
+      fs.writeFile(updatedJsonPath, JSON.stringify(users, null, 4), (err) => {
+        if (err) {
+          throw err;
+        }
+        console.log('JSON array is saved.');
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
