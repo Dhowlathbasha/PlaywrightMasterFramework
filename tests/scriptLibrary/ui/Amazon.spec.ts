@@ -1,6 +1,6 @@
 /* eslint-disable playwright/no-skipped-test */
 import { test } from '@fixtures/pageFixture';
-import moment from 'moment';
+//import moment from 'moment';
 
 test.describe('Amazon', () => {
   test.describe.configure({ mode: 'parallel' });
@@ -13,11 +13,19 @@ test.describe('Amazon', () => {
   //   });
   // }
 
-  test('in order A2', async ({ csvActions }) => {
-    console.log('test A2 ', moment().format('DD-MMM-YYYY hh:mm:ss.SSS'));
-    console.log(__dirname);
-    //TestCaseID,Username,Password
-    console.log(await csvActions.getData('ui.csv', 'ui', 'TC1', 'TestCaseID'));
-    await csvActions.getcsvjson('ui.csv');
+  // test('in order A2', async ({ csvActions }) => {
+  //   console.log('test A2 ', moment().format('DD-MMM-YYYY hh:mm:ss.SSS'));
+  //   console.log(__dirname);
+  //   //TestCaseID,Username,Password
+  //   console.log(await csvActions.getData('ui.csv', 'ui', 'TC1', 'TestCaseID'));
+  //   await csvActions.getcsvjson('ui.csv');
+  // });
+
+  test('API request check', async ({ page, amazonHomePage }) => {
+    await amazonHomePage.navigate();
+  });
+
+  test('API Demo 2', async ({ page, amazonHomePage }) => {
+    await amazonHomePage.navigate();
   });
 });

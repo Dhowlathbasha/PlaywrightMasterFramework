@@ -22,8 +22,8 @@ dotenv.config({
 const TESTCASE_DIR = process.env.TESTCASE_DIR as string;
 export default defineConfig({
   //testDir, // Uncomment this for Cucumber BDD execution
-  testDir: TESTCASE_DIR, // Uncomment this for test runner execution
   outputDir: './test-results/artifacts', //Folder for test artifacts such as screenshots, videos, traces, etc.
+  testDir: TESTCASE_DIR, // Uncomment this for test runner execution
   use: {
     /**
      * While Playwright can download and use the recent Chromium build, it can operate against the branded Google Chrome
@@ -49,6 +49,9 @@ export default defineConfig({
     trace: 'on-first-retry',
     video: 'retain-on-failure',
     viewport: null,
+    contextOptions: {
+      recordHar: { path: 'requests.har', mode: 'full', urlFilter: 'https://www.google.com/' },
+    },
     screenshot: {
       mode: 'on',
       fullPage: true,
@@ -78,7 +81,7 @@ export default defineConfig({
         open: 'on-failure',
       },
     ],
-    [`html`, { outputFolder: './test-results/html-report', open: 'never' }],
+    [`html`, { outputFolder: './html-reporter/html-report', open: 'never' }],
     [
       'junit',
       {
@@ -112,12 +115,12 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
       },
     },
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-      },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: {
+    //     ...devices['Desktop Firefox'],
+    //   },
+    // },
     // {
     //   name: "local",
     //   testMatch: `*${testName}*`,
