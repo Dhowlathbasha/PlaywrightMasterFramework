@@ -33,7 +33,7 @@ export default class BaseActions {
         await updatedLocator.scrollIntoViewIfNeeded({ timeout });
       }
     } catch (error) {
-      logger.error('Error Occured in focus Into view of needed');
+      logger.error(`${error} : Error Occured in focus Into view of needed`);
     }
   }
 

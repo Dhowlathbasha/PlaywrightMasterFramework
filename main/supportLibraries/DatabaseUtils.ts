@@ -2,9 +2,10 @@
 import * as sql from 'mssql';
 import oracledb from 'oracledb';
 import * as Constants from '@data/Constants';
+import * as ibmdb from 'ibm_db';
 
 export default class DBUtil {
-  ibmdb = require('ibm_db');
+  //ibmdb = require('ibm_db');
   /**
    * Executes the query on MSSQL database
    * @param dbConfig data base configuration

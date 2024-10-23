@@ -1,0 +1,151 @@
+
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>playwright.config.ts</title>
+      <link href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" type="text/css" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/javascript/javascript.min.js" type="text/javascript" charset="utf-8"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.css" type="text/css" rel="stylesheet">
+<script src="../assets/source-file.js" type="text/javascript" charset="utf-8"></script>
+<link href="../assets/source-file.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+    <div style="margin-top:3em" class="ui container"><h1 class="ui header"><a href="../index.html">TypeScript coverage report</a></h1><table style="margin-top:2em" class="ui celled table"><thead class=""><tr class=""><th class="">Filename</th><th class="">Percent</th><th class="">Threshold</th><th class="">Total</th><th class="">Covered</th><th class="">Uncovered</th></tr></thead><tbody class=""><tr class="positive"><td class="">playwright.config.ts</td><td class="">100.00%</td><td class="">80%</td><td class="">157</td><td class="">157</td><td class="">0</td></tr></tbody></table><textarea id="editor" readonly="" style="margin-top:3em">import { defineConfig, devices } from &#x27;@playwright/test&#x27;;
+import * as dotenv from &#x27;dotenv&#x27;;
+import { defineBddConfig } from &#x27;playwright-bdd&#x27;;
+import * as os from &#x27;os&#x27;;
+import * as BrowserConfig from &#x27;./main/configs/BrowserConfig&#x27;;
+import * as Constants from &#x27;@data/Constants&#x27;;
+
+const waitTimeInMin: number = 60 * 1000;
+
+dotenv.config({
+  path: `./resource/environments/${process.env.NODE_ENV ? process.env.NODE_ENV : &#x27;qa&#x27;}.env`,
+});
+
+const testDir = defineBddConfig({
+  paths: [&#x27;tests/features/*.feature&#x27;],
+  require: [&#x27;main/steps/*.ts&#x27;],
+  importTestFrom: &#x27;main/configs/fixtures/bddPageFixture.ts&#x27;,
+  // ...other playwright-bdd options
+});
+
+//const testName = process.env.TEST_NAME?.trim() as string;
+const TESTCASE_DIR = process.env.TESTCASE_DIR as string;
+export default defineConfig({
+  //testDir, // Uncomment this for Cucumber BDD execution
+  outputDir: &#x27;./test-results/artifacts&#x27;, //Folder for test artifacts such as screenshots, videos, traces, etc.
+  testDir: TESTCASE_DIR, // Uncomment this for test runner execution
+  use: {
+    /**
+     * While Playwright can download and use the recent Chromium build, it can operate against the branded Google Chrome
+     *  and Microsoft Edge browsers available on the machine (note that Playwright doesn&#x27;t install them by default).
+     *  In particular, the current Playwright version will support Stable and Beta channels of these browsers.
+     */
+    channel: BrowserConfig.fetchBrowserChannel(),
+    browserName: BrowserConfig.fetchBrowserType(),
+    deviceScaleFactor: undefined,
+    headless: false,
+    launchOptions: {
+      args: [&#x27;--start-maximized&#x27;, &#x27;--disable-extensions&#x27;, &#x27;--disable-plugins&#x27;],
+      headless: false,
+      timeout: Number.parseInt(process.env.BROWSER_LAUNCH_TIMEOUT as string, 10),
+      slowMo: 0,
+      downloadsPath: Constants.CommonConstants.DOWNLOAD_PATH,
+    },
+    /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
+    actionTimeout: Number.parseInt(process.env.ACTION_TIMEOUT as string, 10) * waitTimeInMin,
+    acceptDownloads: true,
+    ignoreHTTPSErrors: true,
+    navigationTimeout: Number.parseInt(process.env.NAVIGATION_TIMEOUT as string, 10) * waitTimeInMin,
+    trace: &#x27;on-first-retry&#x27;,
+    video: &#x27;retain-on-failure&#x27;,
+    viewport: null,
+    contextOptions: {
+      recordHar: { path: &#x27;requests.har&#x27;, mode: &#x27;full&#x27;, urlFilter: &#x27;https://www.google.com/&#x27; },
+    },
+    screenshot: {
+      mode: &#x27;on&#x27;,
+      fullPage: true,
+    },
+  },
+  fullyParallel: true,
+  reportSlowTests: null,
+  reporter: [
+    [&#x27;line&#x27;],
+    //[&#x27;list&#x27;, { printSteps: true }],
+    //[&#x27;blob&#x27;, { outputDir: &#x27;./test-results/blob-report&#x27;, fileName: `report-${os.platform()}.zip` }]
+    [`./main/supportLibraries/reportUtils/ReportHelper.ts`] /* Custom report format with logs */,
+
+    /* Allure report configuration */
+    [
+      `allure-playwright`,
+      {
+        environmentInfo: {
+          OS: os.platform(),
+          BROWSER: process.env.BROWSER?.toUpperCase(),
+          os_release: os.release(),
+          os_version: os.version(),
+          node_version: process.version,
+        },
+        outputFolder: &#x27;./test-results/allure-results&#x27;,
+        detail: true,
+        open: &#x27;on-failure&#x27;,
+      },
+    ],
+    [`html`, { outputFolder: &#x27;./html-reporter/html-report&#x27;, open: &#x27;never&#x27; }],
+    [
+      &#x27;junit&#x27;,
+      {
+        embedAnnotationsAsProperties: true,
+        embedAttachmentsAsProperty: &#x27;testrun_evidence&#x27;,
+        outputFile: Constants.CommonConstants.JUNIT_RESULTS_PATH(),
+      },
+    ],
+    [&#x27;json&#x27;, { outputFile: Constants.CommonConstants.JSON_RESULTS_PATH() }],
+    [
+      &#x27;monocart-reporter&#x27;,
+      {
+        name: &#x27;Automation Report&#x27;,
+        outputFile: &#x27;./test-results/report/execution.html&#x27;,
+      },
+    ],
+  ],
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? Number.parseInt(process.env.PARALLEL_THREAD as string, 10) : undefined,
+  preserveOutput: &#x27;failures-only&#x27;,
+  timeout: Number.parseInt(process.env.TEST_TIMEOUT as string, 10) * waitTimeInMin,
+  expect: {
+    timeout: Number.parseInt(process.env.TEST_TIMEOUT as string, 10) * waitTimeInMin,
+  },
+
+  projects: [
+    // {
+    //   name: &#x27;chromium&#x27;,
+    //   use: {
+    //     ...devices[&#x27;Desktop Chrome&#x27;],
+    //   },
+    // },
+    // {
+    //   name: &#x27;firefox&#x27;,
+    //   use: {
+    //     ...devices[&#x27;Desktop Firefox&#x27;],
+    //   },
+    // },
+    // {
+    //   name: &quot;local&quot;,
+    //   testMatch: `*${testName}*`,
+    // },
+    {
+      name: &#x27;suite&#x27;,
+      testMatch: &#x27;*.test.ts&#x27;,
+    },
+  ],
+});
+</textarea><pre id="annotations" style="display:none">[]</pre></div>
+    <p class="footer-text">TypeScript Coverage Report generated by <a href="https://github.com/plantain-00/type-coverage">type-coverage</a> and <a href="https://github.com/alexcanessa/typescript-coverage-report">typescript-coverage-report</a> at Sun, 29 Sep 2024 12:13:40 GMT</p>
+    </body>
+  </html>
+  

@@ -1,4 +1,5 @@
 import { type Page, type Locator, expect, type TestInfo } from '@playwright/test';
+import logger from '@reporthelper/CustomLogger';
 import BaseActions from './BaseActions';
 
 export default class ElementActions extends BaseActions {
@@ -322,6 +323,7 @@ export default class ElementActions extends BaseActions {
       visibility = await this.page.locator(locator).isVisible({ timeout: sec * 1000 });
     } catch (error) {
       visibility = false;
+      logger.error(`${error} : Error Occured in IsVisible`);
     }
 
     return visibility;

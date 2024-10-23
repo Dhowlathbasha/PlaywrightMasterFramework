@@ -109,12 +109,12 @@ export default defineConfig({
   },
 
   projects: [
-    {
-      name: 'chromium',
-      use: {
-        ...devices['Desktop Chrome'],
-      },
-    },
+    // {
+    //   name: 'chromium',
+    //   use: {
+    //     ...devices['Desktop Chrome'],
+    //   },
+    // },
     // {
     //   name: 'firefox',
     //   use: {
@@ -125,9 +125,9 @@ export default defineConfig({
     //   name: "local",
     //   testMatch: `*${testName}*`,
     // },
-    // {
-    //   name: "suite",
-    //   testMatch: "*.test.ts",
-    // },
+    {
+      name: 'suite',
+      testMatch: '*.test.ts',
+    },
   ],
 });

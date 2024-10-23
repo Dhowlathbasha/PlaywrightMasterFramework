@@ -111,6 +111,7 @@
     "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/member-ordering": "error",
     "@typescript-eslint/method-signature-style": "error",
+    "@typescript-eslint/no-require-imports":"off",
     "@typescript-eslint/naming-convention": [
       "error",
       {
@@ -175,6 +176,9 @@
       "error",
       {
         "endOfLine": "auto"
+      },
+      {
+        "printWidth": 120
       }
     ],
     "playwright/expect-expect": [

@@ -9,9 +9,9 @@ export default class Allocator {
     //const sheet = CLIUtil.getValueOf("SHEET");
     // Here sheet is filename
     const sheet = 'testcase';
-    Allocator.deleteFiles(Constants.CommonConstants.TEST_FOLDER_PATH);
+    Allocator.deleteFiles(Constants.CommonConstants.TESTSUITE_FOLDER_PATH);
     let testList = Constants.CommonConstants.BLANK;
-    const fileList = Allocator.getFiles('../../../../data');
+    const fileList = Allocator.getFiles('./data');
 
     for (const { TestName, Mode } of fileList) {
       let modeOfRun = Constants.CommonConstants.BLANK;
@@ -24,7 +24,7 @@ export default class Allocator {
     }
 
     fs.writeFileSync(
-      `${Constants.CommonConstants.TEST_FOLDER_PATH}${sheet}${Constants.CommonConstants.TEST_SUITE_FILE_FORMAT}`,
+      `${Constants.CommonConstants.TESTSUITE_FOLDER_PATH}${sheet}${Constants.CommonConstants.TEST_SUITE_FILE_FORMAT}`,
       Allocator.createTemplate(testList)
     );
     console.log(' Completed!! ');

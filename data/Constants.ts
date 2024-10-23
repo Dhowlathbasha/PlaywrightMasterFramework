@@ -20,7 +20,7 @@ const CommonConstants = {
   DOWNLOAD_PATH: './test-results/downloads/',
   SOAP_XML_REQUEST_PATH: './resources/API/SOAP/',
   REST_JSON_REQUEST_PATH: './resources/API/REST/',
-  TEST_FOLDER_PATH: './tests/',
+  TESTSUITE_FOLDER_PATH: './tests/Suites/',
   TEST_SUITE_FILE_FORMAT: '.test.ts',
   PARALLEL_MODE: 'parallel',
   SERIAL_MODE: 'serial',
