@@ -5,7 +5,7 @@ node_modules/
 *.log
 
 # Ignore the build directory
-out/
+dist/
 
 # Ignore coverage directory generated from tests
 coverage/
